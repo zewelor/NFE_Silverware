@@ -52,6 +52,8 @@ $(EXECUTABLE): $(SRC) $(STARTUP)
 	$(CC) $(CFLAGS) $^ -lm -o $@
 	arm-none-eabi-size $(EXECUTABLE)
 	
+flash:
+	openocd -f /usr/share/openocd/scripts/interface/stlink-v2.cfg -f stm32f0x.cfg -c init -c "reset halt" -c "flash write_image erase bwhoop 0x08000000" -c "verify_image bwhoop 0x08000000" -c "reset run" -c shutdown
 
 clean:
 	rm -f Startup.lst $(TARGET) $(TARGET).lst $(OBJ) $(AUTOGEN) \

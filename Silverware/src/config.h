@@ -11,34 +11,9 @@
 // *************uncomment BWHOOP define for bwhoop, bwhoop pro, E011C Santa Edition, and Beta FPV Lite Flight Controllers
 // *************uncomment E011 define for E011 flight Controller
 // *************uncomment H8mini_blue_board for the H8 mini flight controller with blue circuit board
-#define BWHOOP
-//#define E011
-//#define H8mini_blue_board
-//#define Alienwhoop_ZERO  // requires defining RX_SBUS radio protocol
-
-
-
-//**********************************************************************************************************************
-//***********************************************BETA TESTING ON STICK GESTURE******************************************
-// *************DEFINE ONLY ONE OPTION FROM THIS SECTION!!!
-// *************This is a new section that will allow certain beta testing features to be activated by the stick gesture
-// *************auxillary channel.  Even when defined - the quad will power up with these features off.  To activate -  
-// *************use the following stick gesture on the pitch/roll stick RIGHT-RIGHT-DOWN (leds will blink). To deactivate - 
-// *************stick gesture LEFT-LEFT-DOWN.  Please test the features you are interested in below and give feedback!!!
-
-// *************SPECIAL TEST MODE TO CHECK TRANSMITTER STICK THROWS
-// *************This define will allow you to check if your radio is reaching 100% throws entering <RIGHT-RIGHT-DOWN> gesture
-// ************* will disable throttle and will rapid blink the led when sticks are moved to 100% throws
-// *************entering <LEFT-LEFT-DOWN> will return the quad to normal operation.
-//#define STICK_TRAVEL_CHECK
-
-// *************SPECIAL TEST MODE TO CHANGE D TERM CALCULATION TO ERROR INSTEAD OF MEASUREMENT
-// *************This define will enable you to change the calculation of the PID's D term to track both sticks and gyro (error method)
-// *************instead of just gyro (measurement method).  The quad will start up using the measurement calculation.  Entering 
-// *************RIGHT-RIGHT-DOWN will change over to the error type D calculation.  LEFT-LEFT-DOWN will change back to measurement.
-//#define ERROR_D_TERM
-
-
+// #define BWHOOP
+#define E011
+// #define ERROR_D_TERM
 
 //**********************************************************************************************************************
 //***********************************************RECEIVER SETTINGS******************************************************
@@ -66,7 +41,7 @@
 
 // *************transmitter stick adjustable deadband for roll/pitch/yaw
 // *************.01f = 1% of stick range - comment out to disable
-#define STICKS_DEADBAND .01f
+// #define STICKS_DEADBAND .01f
 
 // *************Radio protocol selection
 // *************select only one
@@ -80,8 +55,8 @@
 
 // *************Transmitter Type Selection
 //#define USE_STOCK_TX
-#define USE_DEVO
-//#define USE_MULTI
+// #define USE_DEVO
+#define USE_MULTI
 
 // *******************************SWITCH SELECTION*****************************
 // *************CHAN_ON - on always ( all protocols)
@@ -97,14 +72,14 @@
 //*************be active.  With LEVELMODE active - MCU will apply RACEMODE if racemode channel is on, HORIZON if horizon 
 //*************channel is on, or racemodeHORIZON if both channels are on - and will be standard LEVELMODE if neither 
 //*************racemode or horizon are switched on.
-#define ARMING CHAN_5
-#define IDLE_UP CHAN_5
-#define IDLE_THR 0.05f                   //This designates an idle throttle of 5%
+// #define ARMING CHAN_5
+// #define IDLE_UP   CHAN_5
+// #define IDLE_THR  0.05f                   //This designates an idle throttle of 5%
 #define LEVELMODE CHAN_6
 #define RACEMODE  CHAN_7
 #define HORIZON   CHAN_8
-#define RATES CHAN_ON
-#define LEDS_ON CHAN_ON
+#define RATES     CHAN_ON
+#define LEDS_ON   CHAN_ON
 
 // *************switch for fpv / other, requires fet
 // *************comment out to disable
@@ -117,7 +92,7 @@
 //#define BUZZER_ENABLE CHAN_OFF
 
 // *************start in level mode for toy tx.
-//#define AUX1_START_ON
+// #define AUX1_START_ON
 
 // *************automatically remove center bias in toy tx ( needs throttle off for 1 second )
 //#define STOCK_TX_AUTOCENTER
@@ -234,7 +209,7 @@
 #define MIX_INCREASE_THROTTLE_3
 //Currently eperimenting with the value below for whoop format.  Default was previously .2f and should be
 //changed back for anything other than a whoop.  This gives "airmode" 100% authority over throttle
-#define MIX_THROTTLE_INCREASE_MAX 1.0f
+// #define MIX_THROTTLE_INCREASE_MAX 1.0f
 
 // *************invert yaw pid for "PROPS OUT" configuration
 //#define INVERT_YAW_PID
@@ -317,13 +292,15 @@
 #endif
 
 #ifdef STRONG_FILTERING
-#define SOFT_KALMAN_GYRO KAL1_HZ_80
+//#define SOFT_KALMAN_GYRO KAL1_HZ_80
+#define SOFT_LPF_1ST_HZ 80
 #define  DTERM_LPF_2ND_HZ 90
 #define MOTOR_FILTER2_ALPHA MFILT1_HZ_80
 #endif
 
 #ifdef VERY_STRONG_FILTERING
-#define SOFT_KALMAN_GYRO KAL1_HZ_70
+//#define SOFT_KALMAN_GYRO KAL1_HZ_70
+#define SOFT_LPF_1ST_HZ 80
 #define  DTERM_LPF_2ND_HZ 80
 #define MOTOR_FILTER2_ALPHA MFILT1_HZ_70
 #endif
