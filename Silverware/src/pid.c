@@ -45,7 +45,7 @@ THE SOFTWARE.
 //                         ROLL       PITCH     YAW
 float pidkp[PIDNUMBER] = {21.5e-2 , 21.5e-2  , 10.5e-1 }; 
 float pidki[PIDNUMBER] = { 14e-1  , 15e-1 , 15e-1 };	
-float pidkd[PIDNUMBER] = { 7.4e-1 , 7.4e-1  , 0.0e-1 };
+float pidkd[PIDNUMBER] = { 7.4e-1 , 7.4e-1  , 5.5e-1 };
 
 //6mm AwesomeSauce 20000kv Pids (Team Alienwhoop) - set filtering to WEAK_FILTERING
 //                         ROLL       PITCH     YAW
@@ -328,7 +328,7 @@ if (aux[CH_AUX1]){
 
 return pidoutput[x];		 		
 }
-
+//#define ANGLE_PID_ATTENUATION 0.70f
 // calculate change from ideal loop time
 // 0.0032f is there for legacy purposes, should be 0.001f = looptime
 // this is called in advance as an optimization because it has division
@@ -340,6 +340,9 @@ void pid_precalc()
 	v_compensation = mapf ( vbattfilt , 3.00 , 4.00 , PID_VC_FACTOR , 1.00);
 	if( v_compensation > PID_VC_FACTOR) v_compensation = PID_VC_FACTOR;
 	if( v_compensation < 1.00f) v_compensation = 1.00;
+	#ifdef LEVELMODE_PID_ATTENUATION
+	if (aux[LEVELMODE]) v_compensation *= LEVELMODE_PID_ATTENUATION;
+	#endif
 #endif
 }
 

@@ -38,17 +38,6 @@
 // *************RIGHT-RIGHT-DOWN will change over to the error type D calculation.  LEFT-LEFT-DOWN will change back to measurement.
 //#define ERROR_D_TERM
 
-//WARNING WARNING WARNING - I FEEL LIKE THIS FEATURE IS BROKEN.  JOIN IN DISCUSSION ON MICRO MOTOR COMMUNITY OR RCGOUPS AFTER YOU TEST FOR YOURSELF.
-//I SEE/FEEL FEED FORWARD ACTIVATE WHEN STICKS LEAVE OR RETURN TO NEUTRAL POINT.  THAT SEEMS WRONG TO ME.
-// *************SPECIAL TEST MODE TO ACTIVATE FEEDFORWARD PID CONTROLLER
-// *************This define will allow you to test the feeling of a feed forward pid controller.  The quad will start up with the regular
-// *************pid controller running.  To activate feed forward - enter RIGHT-RIGHT-DOWN stick gesture.  When feed forward activates during
-// *************sharp stick commands - the leds will rapidly blink to indicate a feed forward condition.  This should help to tune this new feature.
-// *************The idea is for feed forward to accelerate sharp stick commands by replaceing the pidoutput for P with the derivative of stick inputs
-// *************but leave softer commands running on the stock pid controller with the softer feel of the measurement based D term.  LEFT-LEFT-DOWN gesture to exit.
-// *************https://www.rcgroups.com/forums/showpost.php?p=39667667&postcount=13956
-//#define FEED_FORWARD_STRENGTH 5.0f
-
 
 
 //**********************************************************************************************************************
@@ -138,8 +127,9 @@
 //**********************************************************************************************************************
 //***********************************************VOLTAGE SETTINGS*******************************************************
 
-// ************* Raises pids automatically as battery voltage drops in flight
+// ************* Raises pids automatically as battery voltage drops in flight.
 #define PID_VOLTAGE_COMPENSATION
+#define LEVELMODE_PID_ATTENUATION 0.90f  //used to prevent oscillations in angle modes with pid_voltage_compensation enabled due to high pids
 
 // *************compensation for battery voltage vs throttle drop
 #define VDROP_FACTOR 0.7
@@ -662,3 +652,7 @@
 #define MOTOR2_PIN_PA4
 #define MOTOR3_PIN_PA6
 #endif
+
+
+//WARNING WARNING WARNING - THIS FEATURE IS BROKEN.
+//#define FEED_FORWARD_STRENGTH 5.0f
