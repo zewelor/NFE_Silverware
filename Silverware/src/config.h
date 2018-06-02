@@ -19,22 +19,6 @@
 
 
 //**********************************************************************************************************************
-//***********************************************BETA TESTING ON STICK GESTURE******************************************
-// *************DEFINE ONLY ONE OPTION FROM THIS SECTION!!!
-// *************This is a new section that will allow certain beta testing features to be activated by the stick gesture
-// *************auxillary channel.  Even when defined - the quad will power up with these features off.  To activate -  
-// *************use the following stick gesture on the pitch/roll stick RIGHT-RIGHT-DOWN (leds will blink). To deactivate - 
-// *************stick gesture LEFT-LEFT-DOWN.  Please test the features you are interested in below and give feedback!!!
-
-// *************SPECIAL TEST MODE TO CHECK TRANSMITTER STICK THROWS
-// *************This define will allow you to check if your radio is reaching 100% throws entering <RIGHT-RIGHT-DOWN> gesture
-// ************* will disable throttle and will rapid blink the led when sticks are moved to 100% throws
-// *************entering <LEFT-LEFT-DOWN> will return the quad to normal operation.
-//#define STICK_TRAVEL_CHECK
-
-
-
-//**********************************************************************************************************************
 //***********************************************RECEIVER SETTINGS******************************************************
 
 // *************rate in deg/sec
@@ -97,6 +81,7 @@
 #define LEVELMODE CHAN_6
 #define RACEMODE  CHAN_7
 #define HORIZON   CHAN_8
+#define PIDPROFILE CHAN_9
 #define RATES CHAN_ON
 #define LEDS_ON CHAN_ON
 
@@ -270,11 +255,15 @@
 #define FLASH_SAVE1
 //#define FLASH_SAVE2
 
-// enable inverted flight code ( brushless only )
+// *************enable inverted flight code ( brushless only )
 //#define INVERTED_ENABLE
 //#define FN_INVERTED CH_OFF //for brushless only
 
-
+// *************SPECIAL TEST MODE TO CHECK TRANSMITTER STICK THROWS
+// *************This define will allow you to check if your radio is reaching 100% throws entering <RIGHT-RIGHT-DOWN> gesture
+// ************* will disable throttle and will rapid blink the led when sticks are moved to 100% throws
+// *************entering <LEFT-LEFT-DOWN> will return the quad to normal operation.
+//#define STICK_TRAVEL_CHECK
 
 
 
@@ -652,3 +641,13 @@
 
 //WARNING WARNING WARNING - THIS FEATURE IS BROKEN.
 //#define FEED_FORWARD_STRENGTH 5.0f
+
+
+//**********************************************************************************************************************
+//***********************************************BETA TESTING ON STICK GESTURE******************************************
+// *************DEFINE ONLY ONE OPTION FROM THIS SECTION!!!
+// *************This is a new section that will allow certain beta testing features to be activated by the stick gesture
+// *************auxillary channel.  Even when defined - the quad will power up with these features off.  To activate -  
+// *************use the following stick gesture on the pitch/roll stick RIGHT-RIGHT-DOWN (leds will blink). To deactivate - 
+// *************stick gesture LEFT-LEFT-DOWN.  Please test the features you are interested in below and give feedback!!!
+

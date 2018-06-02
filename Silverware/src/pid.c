@@ -31,11 +31,19 @@ THE SOFTWARE.
 #include "defines.h"
 #include "math.h"
 
-//**************************ADVANCED PID CONTROLLER*******************************
 
-//													 Roll  PITCH  YAW
-float stickAccelerator[3] = { 0.0 , 0.0 , 0.0};
-float stickTransition[3]  = { 0.0 , 0.0 , 0.0}; 
+
+//**************************ADVANCED PID CONTROLLER*******************************
+// add profiles change description here.....
+
+
+//pid profile A											 Roll  PITCH  YAW
+float stickAcceleratorProfileA[3] = { 0.0 , 0.0 , 0.0};
+float stickTransitionProfileA[3]  = { 0.0 , 0.0 , 0.0}; 
+
+//pid profile B											 Roll  PITCH  YAW
+float stickAcceleratorProfileB[3] = { 1.0 , 1.0 , 1.0};
+float stickTransitionProfileB[3]  = { 1.0 , 1.0 , 1.0}; 
 
 
 
@@ -127,6 +135,7 @@ extern int in_air;
 extern char aux[AUXNUMBER];
 extern float vbattfilt;
 extern int ledcommand;
+
 
 // multiplier for pids at 3V - for PID_VOLTAGE_COMPENSATION - default 1.33f from H101 code
 #define PID_VC_FACTOR 1.33f
@@ -264,7 +273,20 @@ if (aux[CH_AUX1]){
 				extern float rxcopy[4];		
         float dterm;		
 				float transitionSetpointWeight[3];
+				float stickAccelerator[3];
+				float stickTransition[3];
+			if (aux[PIDPROFILE]){
+				stickAccelerator[x] = stickAcceleratorProfileB[x];
+				stickTransition[x] = stickTransitionProfileB[x];
+			}else{
+				stickAccelerator[x] = stickAcceleratorProfileA[x];
+				stickTransition[x] = stickTransitionProfileA[x];
+			}				
+				if (stickAccelerator[x] < 1){
 				transitionSetpointWeight[x] = (fabs(rxcopy[x]) * stickTransition[x]) + (1- stickTransition[x]);
+				}else{
+				transitionSetpointWeight[x] = (fabs(rxcopy[x]) * (stickTransition[x] / stickAccelerator[x])) + (1- stickTransition[x]);	
+				}
         static float lastrate[3];
 				static float lastsetpoint[3];
         static float dlpf[3] = {0};
@@ -291,6 +313,15 @@ if (aux[CH_AUX1]){
 				extern float rxcopy[4];		
         float dterm;		
 				float transitionSetpointWeight[3];
+				float stickAccelerator[3];
+				float stickTransition[3];
+			if (aux[PIDPROFILE]){
+				stickAccelerator[x] = stickAcceleratorProfileB[x];
+				stickTransition[x] = stickTransitionProfileB[x];
+			}else{
+				stickAccelerator[x] = stickAcceleratorProfileA[x];
+				stickTransition[x] = stickTransitionProfileA[x];
+			}				
 				if (stickAccelerator[x] < 1){
 				transitionSetpointWeight[x] = (fabs(rxcopy[x]) * stickTransition[x]) + (1- stickTransition[x]);
 				}else{
@@ -304,7 +335,7 @@ if (aux[CH_AUX1]){
 						lastsetpoint[x] = setpoint [x];
 						lastrate[x] = gyro[x];	
             dterm = lpf2(  dterm, x );
-            pidoutput[x] += dterm;
+            pidoutput[x] += dterm;		
 				#endif
 				
     }
