@@ -31,6 +31,13 @@ THE SOFTWARE.
 #include "defines.h"
 #include "math.h"
 
+//**************************ADVANCED PID CONTROLLER*******************************
+
+//													 Roll  PITCH  YAW
+float stickAccelerator[3] = { 0.0 , 0.0 , 0.0};
+float stickTransition[3]  = { 0.0 , 0.0 , 0.0}; 
+
+
 
 //************************************PIDS****************************************
 
@@ -111,6 +118,7 @@ static float lasterror[PIDNUMBER];
 float v_compensation = 1.00;
 
 extern float error[PIDNUMBER];
+extern float setpoint[PIDNUMBER];
 extern float looptime;
 extern float gyro[3];
 extern int onground;
@@ -119,7 +127,6 @@ extern int in_air;
 extern char aux[AUXNUMBER];
 extern float vbattfilt;
 extern int ledcommand;
-
 
 // multiplier for pids at 3V - for PID_VOLTAGE_COMPENSATION - default 1.33f from H101 code
 #define PID_VC_FACTOR 1.33f
@@ -278,7 +285,7 @@ if (aux[CH_AUX1]){
         #endif 
 
 
-        #ifdef DTERM_LPF_1ST_HZ
+        #if (defined DTERM_LPF_1ST_HZ && !defined ADVANCED_PID_CONTROLLER)
         float dterm;
         static float lastrate[3];
         static float dlpf[3] = {0};
@@ -291,6 +298,24 @@ if (aux[CH_AUX1]){
         pidoutput[x] += dlpf[x];                   
         #endif
         
+        #if (defined DTERM_LPF_1ST_HZ && defined ADVANCED_PID_CONTROLLER)
+				extern float rxcopy[4];		
+        float dterm;		
+				float transitionSetpointWeight[3];
+				transitionSetpointWeight[x] = (fabs(rxcopy[x]) * stickTransition[x]) + (1- stickTransition[x]);
+        static float lastrate[3];
+				static float lastsetpoint[3];
+        static float dlpf[3] = {0};
+        if ( pidkd[x] > 0){
+						dterm = ((setpoint[x] - lastsetpoint[x]) * pidkd[x] * stickAccelerator[x] * transitionSetpointWeight[x] * timefactor) - ((gyro[x] - lastrate[x]) * pidkd[x] * timefactor);
+						lastsetpoint[x] = setpoint [x];
+						lastrate[x] = gyro[x];	
+						lpf( &dlpf[x], dterm, FILTERCALC( 0.001 , 1.0f/DTERM_LPF_1ST_HZ ) );
+						pidoutput[x] += dlpf[x]; }                   
+        #endif	
+     
+
+// to be removed
         #if (defined DTERM_LPF_2ND_HZ && defined ERROR_D_TERM)
         float dterm;
         static float lastrate[3]; 
@@ -309,7 +334,8 @@ if (aux[CH_AUX1]){
             pidoutput[x] += dterm;}
 				#endif
 				
-        #if (defined DTERM_LPF_2ND_HZ && !defined ERROR_D_TERM)
+				
+        #if (defined DTERM_LPF_2ND_HZ && !defined ADVANCED_PID_CONTROLLER)
         float dterm;
         static float lastrate[3]; 
         float lpf2( float in, int num);
@@ -320,7 +346,28 @@ if (aux[CH_AUX1]){
             pidoutput[x] += dterm;}
 				#endif   
 
+				#if (defined DTERM_LPF_2ND_HZ && defined ADVANCED_PID_CONTROLLER)
+				extern float rxcopy[4];		
+        float dterm;		
+				float transitionSetpointWeight[3];
+				if (stickAccelerator[x] < 1){
+				transitionSetpointWeight[x] = (fabs(rxcopy[x]) * stickTransition[x]) + (1- stickTransition[x]);
+				}else{
+				transitionSetpointWeight[x] = (fabs(rxcopy[x]) * (stickTransition[x] / stickAccelerator[x])) + (1- stickTransition[x]);	
+				}
+        static float lastrate[3];
+				static float lastsetpoint[3];
+        float lpf2( float in, int num);
+        if ( pidkd[x] > 0){
+						dterm = ((setpoint[x] - lastsetpoint[x]) * pidkd[x] * stickAccelerator[x] * transitionSetpointWeight[x] * timefactor) - ((gyro[x] - lastrate[x]) * pidkd[x] * timefactor);
+						lastsetpoint[x] = setpoint [x];
+						lastrate[x] = gyro[x];	
+            dterm = lpf2(  dterm, x );
+            pidoutput[x] += dterm;}
+				#endif
+				
     }
+		
     		#ifdef PID_VOLTAGE_COMPENSATION
 					pidoutput[x] *= v_compensation;
 				#endif
@@ -328,7 +375,7 @@ if (aux[CH_AUX1]){
 
 return pidoutput[x];		 		
 }
-//#define ANGLE_PID_ATTENUATION 0.70f
+
 // calculate change from ideal loop time
 // 0.0032f is there for legacy purposes, should be 0.001f = looptime
 // this is called in advance as an optimization because it has division
@@ -336,7 +383,7 @@ void pid_precalc()
 {
 	timefactor = 0.0032f / looptime;
 	
-	#ifdef PID_VOLTAGE_COMPENSATION
+#ifdef PID_VOLTAGE_COMPENSATION
 	v_compensation = mapf ( vbattfilt , 3.00 , 4.00 , PID_VC_FACTOR , 1.00);
 	if( v_compensation > PID_VC_FACTOR) v_compensation = PID_VC_FACTOR;
 	if( v_compensation < 1.00f) v_compensation = 1.00;

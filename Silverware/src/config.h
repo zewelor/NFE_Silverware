@@ -293,6 +293,8 @@
 //#############################################################################################################################
 //#############################################################################################################################
 
+//enables use of stick accelerator and stick transition for d term lpf 1 & 2
+#define ADVANCED_PID_CONTROLLER
 
 //Throttle must drop below this value if arming feature is enabled for arming to take place.  MIX_INCREASE_THROTTLE_3 if enabled
 //will also not activate on the ground untill this threshold is passed during takeoff for safety and better staging behavior.
