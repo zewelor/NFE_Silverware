@@ -32,12 +32,6 @@
 // *************entering <LEFT-LEFT-DOWN> will return the quad to normal operation.
 //#define STICK_TRAVEL_CHECK
 
-// *************SPECIAL TEST MODE TO CHANGE D TERM CALCULATION TO ERROR INSTEAD OF MEASUREMENT
-// *************This define will enable you to change the calculation of the PID's D term to track both sticks and gyro (error method)
-// *************instead of just gyro (measurement method).  The quad will start up using the measurement calculation.  Entering 
-// *************RIGHT-RIGHT-DOWN will change over to the error type D calculation.  LEFT-LEFT-DOWN will change back to measurement.
-//#define ERROR_D_TERM
-
 
 
 //**********************************************************************************************************************

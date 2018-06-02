@@ -131,18 +131,6 @@ extern int ledcommand;
 // multiplier for pids at 3V - for PID_VOLTAGE_COMPENSATION - default 1.33f from H101 code
 #define PID_VC_FACTOR 1.33f
 
-#ifdef NORMAL_DTERM
-static float lastrate[PIDNUMBER];
-#endif
-
-#ifdef NEW_DTERM
-static float lastratexx[PIDNUMBER][2];
-#endif
-
-#ifdef MAX_FLAT_LPF_DIFF_DTERM
-static float lastratexx[PIDNUMBER][4];
-#endif
-
 #ifdef SIMPSON_RULE_INTEGRAL
 static float lasterror2[PIDNUMBER];
 #endif
@@ -259,43 +247,17 @@ if (aux[CH_AUX1]){
 
     // D term
     // skip yaw D term if not set               
-    if ( pidkd[x] > 0 )
-    {
-        #ifdef NORMAL_DTERM
-        pidoutput[x] = pidoutput[x] - (gyro[x] - lastrate[x]) * pidkd[x] * timefactor  ;
-        lastrate[x] = gyro[x];
-        #endif
-
-        #ifdef NEW_DTERM
-        pidoutput[x] = pidoutput[x] - ( ( 0.5f) *gyro[x] 
-                    - (0.5f) * lastratexx[x][1] ) * pidkd[x] * timefactor  ;
-                        
-        lastratexx[x][1] = lastratexx[x][0];
-        lastratexx[x][0] = gyro[x];
-        #endif
-    
-        #ifdef MAX_FLAT_LPF_DIFF_DTERM 
-        pidoutput[x] = pidoutput[x] - ( + 0.125f *gyro[x] + 0.250f * lastratexx[x][0]
-                    - 0.250f * lastratexx[x][2] - ( 0.125f) * lastratexx[x][3]) * pidkd[x] * timefactor 						;
-
-        lastratexx[x][3] = lastratexx[x][2];
-        lastratexx[x][2] = lastratexx[x][1];
-        lastratexx[x][1] = lastratexx[x][0];
-        lastratexx[x][0] = gyro[x];
-        #endif 
-
-
+    if ( pidkd[x] > 0 ){
+			
         #if (defined DTERM_LPF_1ST_HZ && !defined ADVANCED_PID_CONTROLLER)
         float dterm;
         static float lastrate[3];
         static float dlpf[3] = {0};
 
-        dterm = - (gyro[x] - lastrate[x]) * pidkd[x] * timefactor;
-        lastrate[x] = gyro[x];
-
-        lpf( &dlpf[x], dterm, FILTERCALC( 0.001 , 1.0f/DTERM_LPF_1ST_HZ ) );
-
-        pidoutput[x] += dlpf[x];                   
+						dterm = - (gyro[x] - lastrate[x]) * pidkd[x] * timefactor;
+						lastrate[x] = gyro[x];
+						lpf( &dlpf[x], dterm, FILTERCALC( 0.001 , 1.0f/DTERM_LPF_1ST_HZ ) );
+						pidoutput[x] += dlpf[x];                   
         #endif
         
         #if (defined DTERM_LPF_1ST_HZ && defined ADVANCED_PID_CONTROLLER)
@@ -306,44 +268,23 @@ if (aux[CH_AUX1]){
         static float lastrate[3];
 				static float lastsetpoint[3];
         static float dlpf[3] = {0};
-        if ( pidkd[x] > 0){
+        
 						dterm = ((setpoint[x] - lastsetpoint[x]) * pidkd[x] * stickAccelerator[x] * transitionSetpointWeight[x] * timefactor) - ((gyro[x] - lastrate[x]) * pidkd[x] * timefactor);
 						lastsetpoint[x] = setpoint [x];
 						lastrate[x] = gyro[x];	
 						lpf( &dlpf[x], dterm, FILTERCALC( 0.001 , 1.0f/DTERM_LPF_1ST_HZ ) );
-						pidoutput[x] += dlpf[x]; }                   
+						pidoutput[x] += dlpf[x];                    
         #endif	
-     
-
-// to be removed
-        #if (defined DTERM_LPF_2ND_HZ && defined ERROR_D_TERM)
-        float dterm;
-        static float lastrate[3]; 
-				static float lasterrorx[PIDNUMBER];
-        float lpf2( float in, int num);
-        if ( pidkd[x] > 0)
-        {
-					if (aux[CH_AUX1]){
-						     dterm =  (error[x] - lasterrorx[x]) * pidkd[x] * timefactor;
-                 lasterrorx[x] = error[x];
-					}else{	
-								 dterm = - (gyro[x] - lastrate[x]) * pidkd[x] * timefactor;
-								 lastrate[x] = gyro[x];	}
-	
-            dterm = lpf2(  dterm, x );
-            pidoutput[x] += dterm;}
-				#endif
-				
-				
+     		
         #if (defined DTERM_LPF_2ND_HZ && !defined ADVANCED_PID_CONTROLLER)
         float dterm;
         static float lastrate[3]; 
         float lpf2( float in, int num);
-        if ( pidkd[x] > 0){
+        
 						dterm = - (gyro[x] - lastrate[x]) * pidkd[x] * timefactor;
 						lastrate[x] = gyro[x];	
             dterm = lpf2(  dterm, x );
-            pidoutput[x] += dterm;}
+            pidoutput[x] += dterm;
 				#endif   
 
 				#if (defined DTERM_LPF_2ND_HZ && defined ADVANCED_PID_CONTROLLER)
@@ -358,12 +299,12 @@ if (aux[CH_AUX1]){
         static float lastrate[3];
 				static float lastsetpoint[3];
         float lpf2( float in, int num);
-        if ( pidkd[x] > 0){
+  
 						dterm = ((setpoint[x] - lastsetpoint[x]) * pidkd[x] * stickAccelerator[x] * transitionSetpointWeight[x] * timefactor) - ((gyro[x] - lastrate[x]) * pidkd[x] * timefactor);
 						lastsetpoint[x] = setpoint [x];
 						lastrate[x] = gyro[x];	
             dterm = lpf2(  dterm, x );
-            pidoutput[x] += dterm;}
+            pidoutput[x] += dterm;
 				#endif
 				
     }
