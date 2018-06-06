@@ -81,7 +81,7 @@
 #define LEVELMODE CHAN_6
 #define RACEMODE  CHAN_7
 #define HORIZON   CHAN_8
-#define PIDPROFILE CHAN_9
+#define PIDPROFILE CHAN_9                //For switching stickAccelerator & stickTransition profiles on pid.c page
 #define RATES CHAN_ON
 #define LEDS_ON CHAN_ON
 
@@ -143,8 +143,8 @@
 // *************Select the appropriate filtering set for your craft's gyro, D-term, and motor output or select CUSTOM_FILTERING to pick your own values.  
 // *************If your throttle does not want to drop crisply and quickly when you lower the throttle stick, then move to a stronger filter set
 
-//#define WEAK_FILTERING
-#define STRONG_FILTERING
+#define WEAK_FILTERING
+//#define STRONG_FILTERING
 //#define VERY_STRONG_FILTERING
 //#define CUSTOM_FILTERING
 
@@ -161,7 +161,6 @@
 // *************1st order adjustable, second order adjustable, or 3rd order fixed (non adjustable)
 //#define DTERM_LPF_1ST_HZ 100
 #define  DTERM_LPF_2ND_HZ 100
-//#define DTERM_LPF3_88    //non adjustable
 
 // *************enable motor output filter - select and adjust frequency
 //#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
@@ -637,10 +636,6 @@
 #define MOTOR2_PIN_PA4
 #define MOTOR3_PIN_PA6
 #endif
-
-
-//WARNING WARNING WARNING - THIS FEATURE IS BROKEN.
-//#define FEED_FORWARD_STRENGTH 5.0f
 
 
 //**********************************************************************************************************************
