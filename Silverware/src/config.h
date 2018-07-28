@@ -155,8 +155,8 @@
 // *************gyro low pass filter ( iir )
 // *************set only one below - kalman, 1st order, or second order - and adjust frequency
 //**************ABOVE 100 ADJUST IN INCRIMENTS OF 20, BELOW 100 ADJUST IN INCRIMENTS OF 10
-//#define SOFT_KALMAN_GYRO KAL1_HZ_70
-#define SOFT_LPF_1ST_HZ 80
+#define SOFT_KALMAN_GYRO KAL1_HZ_90
+//#define SOFT_LPF_1ST_HZ 80
 //#define SOFT_LPF_2ND_HZ 80
 
 // *************D term low pass filter type - set only one below and adjust frequency if adjustable filter is used
@@ -165,7 +165,7 @@
 #define  DTERM_LPF_2ND_HZ 100
 
 // *************enable motor output filter - select and adjust frequency
-#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_70
 //#define MOTOR_KAL KAL1_HZ_70
 #endif
 
