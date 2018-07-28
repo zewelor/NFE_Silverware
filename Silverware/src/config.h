@@ -11,10 +11,10 @@
 // *************uncomment BWHOOP define for bwhoop, bwhoop pro, E011C Santa Edition, and Beta FPV Lite Flight Controllers
 // *************uncomment E011 define for E011 flight Controller
 // *************uncomment H8mini_blue_board for the H8 mini flight controller with blue circuit board
-#define BWHOOP
+//#define BWHOOP
 //#define E011
 //#define H8mini_blue_board
-//#define Alienwhoop_ZERO  // requires defining RX_SBUS radio protocol
+#define Alienwhoop_ZERO  // requires defining RX_SBUS radio protocol
 
 
 
@@ -55,6 +55,8 @@
 //#define RX_BAYANG_BLE_APP
 //#define RX_NRF24_BAYANG_TELEMETRY
 //#define RX_SBUS
+//#define RX_DSMX_2048
+//#define RX_DSM2_1024
 
 // *************Transmitter Type Selection
 //#define USE_STOCK_TX
@@ -123,7 +125,7 @@
 
 // *************do not start software if battery is too low
 // *************flashes 2 times repeatedly at startup
-//#define STOP_LOWBATTERY
+#define STOP_LOWBATTERY
 
 // *************voltage to start warning led blinking
 #define VBATTLOW 3.5
@@ -153,8 +155,8 @@
 // *************gyro low pass filter ( iir )
 // *************set only one below - kalman, 1st order, or second order - and adjust frequency
 //**************ABOVE 100 ADJUST IN INCRIMENTS OF 20, BELOW 100 ADJUST IN INCRIMENTS OF 10
-#define SOFT_KALMAN_GYRO KAL1_HZ_90
-//#define SOFT_LPF_1ST_HZ 80
+//#define SOFT_KALMAN_GYRO KAL1_HZ_70
+#define SOFT_LPF_1ST_HZ 80
 //#define SOFT_LPF_2ND_HZ 80
 
 // *************D term low pass filter type - set only one below and adjust frequency if adjustable filter is used
@@ -163,10 +165,9 @@
 #define  DTERM_LPF_2ND_HZ 100
 
 // *************enable motor output filter - select and adjust frequency
-//#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
-#define MOTOR_KAL KAL1_HZ_70
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
+//#define MOTOR_KAL KAL1_HZ_70
 #endif
-
 
 
 //**********************************************************************************************************************
@@ -251,10 +252,14 @@
 // *************This define will allow you to check if your radio is reaching 100% throws entering <RIGHT-RIGHT-DOWN> gesture
 // ************* will disable throttle and will rapid blink the led when sticks are moved to 100% throws
 // *************entering <LEFT-LEFT-DOWN> will return the quad to normal operation.
-//#define STICK_TRAVEL_CHECK
+#define STICK_TRAVEL_CHECK
 
 
-
+//#define SWITCHABLE_FEATURE_1
+#ifdef SWITCHABLE_FEATURE_1
+//linked to gesture RRR & saved to flash with DDD
+//toggles state of variable int flash_feature_1
+#endif
 
 
 //#############################################################################################################################
@@ -398,7 +403,8 @@
 #define SENSOR_ROTATE_90_CW
 
 // SPI PINS DEFINITONS & RADIO
-#ifdef RX_SBUS
+#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024)
+#define SERIAL_RX_SPEKBIND_PIN GPIO_Pin_3
 #define SERIAL_RX_PIN GPIO_Pin_14
 #define SERIAL_RX_PORT GPIOA
 #define SERIAL_RX_SOURCE GPIO_PinSource14
@@ -462,7 +468,8 @@
 #define SOFTI2C_PUSHPULL_CLK
 
 // SPI PINS DEFINITONS & RADIO
-#ifdef RX_SBUS
+#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024)
+#define SERIAL_RX_SPEKBIND_PIN GPIO_Pin_3
 #define SERIAL_RX_PIN GPIO_Pin_14
 #define SERIAL_RX_PORT GPIOA
 #define SERIAL_RX_SOURCE GPIO_PinSource14
@@ -524,7 +531,8 @@
 #define SENSOR_ROTATE_180
 
 // SPI PINS DEFINITONS & RADIO
-#ifdef RX_SBUS
+#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024)
+#define SERIAL_RX_SPEKBIND_PIN GPIO_Pin_3
 #define SERIAL_RX_PIN GPIO_Pin_14
 #define SERIAL_RX_PORT GPIOA
 #define SERIAL_RX_SOURCE GPIO_PinSource14
@@ -586,7 +594,8 @@
 #define SENSOR_ROTATE_90_CCW
 
 // SPI PINS DEFINITONS & RADIO
-#ifdef RX_SBUS
+#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024)
+#define SERIAL_RX_SPEKBIND_PIN GPIO_Pin_2
 #define SERIAL_RX_PIN GPIO_Pin_3
 #define SERIAL_RX_PORT GPIOA
 #define SERIAL_RX_SOURCE GPIO_PinSource3
