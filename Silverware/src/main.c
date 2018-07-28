@@ -427,7 +427,7 @@ if ( LED_NUMBER > 0)
                 }
             else 
             {  
-                int leds_on = aux[LEDS_ON];
+                int leds_on = !aux[LEDS_ON];
                 if (ledcommand)
                 {
                     if (!ledcommandtime)
