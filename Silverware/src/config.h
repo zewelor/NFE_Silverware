@@ -85,7 +85,7 @@
 #define HORIZON   CHAN_8
 #define PIDPROFILE CHAN_9                //For switching stickAccelerator & stickTransition profiles on pid.c page
 #define RATES CHAN_ON
-#define LEDS_ON CHAN_ON
+#define LEDS_ON !CHAN_10
 
 // *************switch for fpv / other, requires fet
 // *************comment out to disable
