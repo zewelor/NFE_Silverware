@@ -50,11 +50,11 @@
 // *************select only one
 //#define RX_BAYANG_PROTOCOL
 //#define RX_BAYANG_PROTOCOL_TELEMETRY
-#define RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND
+//#define RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND
 //#define RX_BAYANG_PROTOCOL_BLE_BEACON
 //#define RX_BAYANG_BLE_APP
 //#define RX_NRF24_BAYANG_TELEMETRY
-//#define RX_SBUS
+#define RX_SBUS
 //#define RX_DSMX_2048
 //#define RX_DSM2_1024
 
@@ -174,7 +174,7 @@
 //***********************************************MOTOR OUTPUT SETTINGS**************************************************
 
 // *************invert yaw pid for "PROPS OUT" configuration
-//#define INVERT_YAW_PID
+#define INVERT_YAW_PID
 
 // *************pwm frequency for motor control
 // *************a higher frequency makes the motors more linear
