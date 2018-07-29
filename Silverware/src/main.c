@@ -124,6 +124,8 @@ int binding_while_armed = 1;
 
 //Experimental Flash Memory Feature
 int flash_feature_1 = 0;
+int flash_feature_2 = 0;
+int flash_feature_3 = 0;
 
 // for led flash on gestures
 int ledcommand = 0;

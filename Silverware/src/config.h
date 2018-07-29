@@ -48,15 +48,12 @@
 
 // *************Radio protocol selection
 // *************select only one
-//#define RX_BAYANG_PROTOCOL
-//#define RX_BAYANG_PROTOCOL_TELEMETRY
-//#define RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND
-//#define RX_BAYANG_PROTOCOL_BLE_BEACON
-//#define RX_BAYANG_BLE_APP
-//#define RX_NRF24_BAYANG_TELEMETRY
 #define RX_SBUS
 //#define RX_DSMX_2048
 //#define RX_DSM2_1024
+//#define RX_NRF24_BAYANG_TELEMETRY
+//#define RX_BAYANG_PROTOCOL_BLE_BEACON
+//#define RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND
 
 // *************Transmitter Type Selection
 //#define USE_STOCK_TX
@@ -118,12 +115,14 @@
 #define AUTO_VDROP_FACTOR
 
 // *************lower throttle when battery below threshold - forced landing low voltage cutoff
-//#define LVC_LOWER_THROTTLE
+// *************THIS FEATURE WILL BE OFF BY DEFAULT EVEN WHEN DEFINED - USE STICK GESTURE LEFT-LEFT-LEFT TO ACTIVATE THEN DOWN-DOWN-DOWN TO SAVE AS ON
+// *************Led light will blink once when LVC forced landing is turned on, blink twice when turned off, and will blink multiple times upon save command
+#define LVC_LOWER_THROTTLE
 #define LVC_LOWER_THROTTLE_VOLTAGE 3.30
 #define LVC_LOWER_THROTTLE_VOLTAGE_RAW 2.70
 #define LVC_LOWER_THROTTLE_KP 3.0
 
-// *************do not start software if battery is too low
+// *************do not start software if battery is too low (below 3.3v)
 // *************flashes 2 times repeatedly at startup
 #define STOP_LOWBATTERY
 
@@ -145,10 +144,11 @@
 // *************Select the appropriate filtering set for your craft's gyro, D-term, and motor output or select CUSTOM_FILTERING to pick your own values.  
 // *************If your throttle does not want to drop crisply and quickly when you lower the throttle stick, then move to a stronger filter set
 
-#define WEAK_FILTERING
+//#define WEAK_FILTERING
 //#define STRONG_FILTERING
 //#define VERY_STRONG_FILTERING
 //#define CUSTOM_FILTERING
+#define ALIENWHOOP_ZERO_FILTERING
 
 
 #ifdef CUSTOM_FILTERING
@@ -255,11 +255,7 @@
 #define STICK_TRAVEL_CHECK
 
 
-//#define SWITCHABLE_FEATURE_1
-#ifdef SWITCHABLE_FEATURE_1
-//linked to gesture RRR & saved to flash with DDD
-//toggles state of variable int flash_feature_1
-#endif
+
 
 
 //#############################################################################################################################
@@ -289,6 +285,22 @@
 #define MOTOR_MIN_ENABLE
 #define MOTOR_MIN_VALUE 0.05
 
+
+#ifdef LVC_LOWER_THROTTLE
+#define SWITCHABLE_FEATURE_2
+#endif
+
+#ifdef INVERT_YAW_PID
+#define SWITCHABLE_FEATURE_3
+#endif
+
+#ifdef ALIENWHOOP_ZERO_FILTERING
+#define SOFT_KALMAN_GYRO KAL1_HZ_90
+#define  DTERM_LPF_2ND_HZ 100
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
+#define SWITCHABLE_MOTOR_FILTER2_ALPHA MFILT1_HZ_70
+#define SWITCHABLE_FEATURE_1
+#endif
 
 #ifdef WEAK_FILTERING
 #define SOFT_KALMAN_GYRO KAL1_HZ_90
@@ -348,7 +360,7 @@
 
 // overclock to 64Mhz
 
-//#define ENABLE_OVERCLOCK
+#define ENABLE_OVERCLOCK
 
 #pragma diag_warning 1035 , 177 , 4017
 #pragma diag_error 260

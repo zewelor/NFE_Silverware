@@ -93,7 +93,32 @@ if (flash_feature_1)
 }else{
 	fmc_write_float (53,0);	
 }
+#endif
 
+#ifdef SWITCHABLE_FEATURE_2
+extern int flash_feature_2;
+
+//save LVC info
+
+if (flash_feature_2)
+{
+	fmc_write_float (54,1);	
+}else{
+	fmc_write_float (54,0);	
+}
+#endif
+
+#ifdef SWITCHABLE_FEATURE_3
+extern int flash_feature_3;
+
+//save LVC info
+
+if (flash_feature_3)
+{
+	fmc_write_float (55,1);	
+}else{
+	fmc_write_float (55,0);	
+}
 #endif
 
     writeword(255, FMC_HEADER);
@@ -170,12 +195,20 @@ extern int rx_bind_enable;
 #endif
 
 #ifdef SWITCHABLE_FEATURE_1
-
-extern int flash_feature_1;
-
-flash_feature_1 = fmc_read_float(53);
-
+	extern int flash_feature_1;
+	flash_feature_1 = fmc_read_float(53);
 #endif
+
+#ifdef SWITCHABLE_FEATURE_2
+	extern int flash_feature_2;
+	flash_feature_2 = fmc_read_float(54);
+#endif
+
+#ifdef SWITCHABLE_FEATURE_3
+	extern int flash_feature_3;
+	flash_feature_3 = fmc_read_float(55);
+#endif
+
     }
     else
     {

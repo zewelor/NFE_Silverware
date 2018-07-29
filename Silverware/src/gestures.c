@@ -54,7 +54,18 @@ void gestures( void)
 			    extern unsigned long lastlooptime;
 			    lastlooptime = gettime();
 						
-		    }		
+		    }	
+	
+            if (command == GESTURE_DUD)
+              {                  
+								 #ifdef SWITCHABLE_FEATURE_3
+                 extern int flash_feature_3;
+                 flash_feature_3=!flash_feature_3;
+                 ledblink = 2 - flash_feature_3;
+                 pid_gestures_used = 1;								 
+								 #endif
+              }    
+				
             if (command == GESTURE_UUU)
               {
                  #ifdef RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND                  
@@ -74,7 +85,17 @@ void gestures( void)
                  pid_gestures_used = 1;								 
 								 #endif
               }
-              
+ 				
+            if (command == GESTURE_LLL)
+              {
+                 #ifdef SWITCHABLE_FEATURE_2     
+                 extern int flash_feature_2;
+                 flash_feature_2=!flash_feature_2;
+                 ledblink = 2 - flash_feature_2;
+                 pid_gestures_used = 1;								 
+								 #endif
+              }
+	             
             if (command == GESTURE_RRD)
               {
                   aux[CH_AUX1] = 1;
