@@ -68,13 +68,14 @@ void gestures( void)
 				
             if (command == GESTURE_UUU)
               {
-                 #ifdef RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND                  
+                 #if defined (RX_DSMX_2048) || defined (RX_DSM2_1024) || defined (RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND)                  
                  extern int rx_bind_enable;
                  rx_bind_enable=!rx_bind_enable;
                  ledblink = 2 - rx_bind_enable;
                  pid_gestures_used = 1;  
                  #endif
-              }    
+								
+							}    
 			
             if (command == GESTURE_RRR)
               {								

@@ -155,9 +155,11 @@ clk_init();
 	
   time_init();
 
-	#if defined(RX_DSMX_2048) || defined(RX_DSM2_1024)    
-  rx_spektrum_bind();    
-  #endif
+
+#if defined(RX_DSMX_2048) || defined(RX_DSM2_1024)    
+		rx_spektrum_bind(); 
+#endif
+	
 	
 	delay(100000);
 		
@@ -192,14 +194,16 @@ aux[CH_AUX1] = 1;
 #endif
     
     
-    #ifdef FLASH_SAVE1
+ #ifdef FLASH_SAVE1
 // read pid identifier for values in file pid.c
     flash_hard_coded_pid_identifier();
 
 // load flash saved variables
     flash_load( );
 #endif
-    	
+
+
+	
 	rx_init();
 
 	
