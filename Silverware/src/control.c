@@ -104,6 +104,7 @@ float rxcopy[4];
 #ifdef BETAFLIGHT_RATES
 #define SETPOINT_RATE_LIMIT 1998.0f
 #define RC_RATE_INCREMENTAL 14.54f
+
 static inline float constrainf(float amt, float low, float high)
 {
     if (amt < low)
@@ -119,13 +120,13 @@ static float calcBFRatesRad(int axis)
     float rcRate, superExpo;
     if (axis == ROLL) {
         rcRate = (float) BF_RC_RATE_ROLL;
-        superExpo = (float) BF_SUPER_EXPO_ROLL;
+        superExpo = (float) BF_SUPER_RATE_ROLL;
     } else if (axis == PITCH) {
         rcRate = (float) BF_RC_RATE_PITCH;
-        superExpo = (float) BF_SUPER_EXPO_PITCH;
+        superExpo = (float) BF_SUPER_RATE_PITCH;
 	} else {
         rcRate = (float) BF_RC_RATE_YAW;
-        superExpo = (float) BF_SUPER_EXPO_YAW;
+        superExpo = (float) BF_SUPER_RATE_YAW;
     }
     if (rcRate > 2.0f) {
         rcRate += RC_RATE_INCREMENTAL * (rcRate - 2.0f);
@@ -143,7 +144,7 @@ static float calcBFRatesRad(int axis)
 void control( void)
 {	
 
-// rates / expert mode
+// high-low rates switch 
 float rate_multiplier = 1.0;
 	
 	if ( aux[RATES]  )
@@ -223,8 +224,6 @@ pid_precalc();
 #endif
         
 if (aux[LEVELMODE]&&!acro_override){
-	// level mode calculations done after to reduce latency
-	// the 1ms extra latency should not affect cascaded pids significantly
 	extern void stick_vector( float rx_input[] , float maxangle);
 	extern float errorvect[]; // level mode angle error calculated by stick_vector.c	
 	extern float GEstG[3]; // gravity vector for yaw feedforward
