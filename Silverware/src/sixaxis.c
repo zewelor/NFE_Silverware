@@ -28,17 +28,14 @@ THE SOFTWARE.
 #include "sixaxis.h"
 #include "drv_time.h"
 #include "util.h"
-#include "config.h"
+#include "defines.h"
 #include "led.h"
 #include "drv_serial.h"
-
 #include "drv_i2c.h"
-
 
 #include <math.h>
 #include <stdio.h>
 #include <inttypes.h>
-
 
 #include "debug.h"
 

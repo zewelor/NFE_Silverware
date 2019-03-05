@@ -1,9 +1,10 @@
 
+#include "targets.h"
+
+
 // HARDWARE PINS SETTING
 //
 
-//NFE NOTES:  Most of the target related pin assignments are now being staged at the bottom of config.h 
-//in preparation of being moved to seperate target files.
 
 // do not change hardware pins below
 // make sure you don't set SWDIO or SWDCLK pins (programming pins)

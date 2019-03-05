@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>BWhoop</TargetName>
+      <TargetName>NFE_Silverware</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>bwhoop</OutputName>
+          <OutputName>nfe_silverware</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -487,6 +487,11 @@
               <FilePath>.\src\rx_bayang_protocol.c</FilePath>
             </File>
             <File>
+              <FileName>rx_bayang_protocol_telemetry_autobind.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\rx_bayang_protocol_telemetry_autobind.c</FilePath>
+            </File>
+            <File>
               <FileName>rx_bayang_protocol_ble.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\rx_bayang_protocol_ble.c</FilePath>
@@ -510,6 +515,16 @@
               <FileName>rx_sbus.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\rx_sbus.c</FilePath>
+            </File>
+            <File>
+              <FileName>rx_dsm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\rx_dsm.c</FilePath>
+            </File>
+            <File>
+              <FileName>rx_crsf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\rx_crsf.c</FilePath>
             </File>
             <File>
               <FileName>led.c</FileName>
@@ -577,6 +592,11 @@
               <FilePath>.\src\hardware.h</FilePath>
             </File>
             <File>
+              <FileName>targets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\targets.h</FilePath>
+            </File>
+            <File>
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\src\config.h</FilePath>
@@ -605,21 +625,6 @@
               <FileName>serial_4way_avrootloader.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\serial_4way_avrootloader.c</FilePath>
-            </File>
-            <File>
-              <FileName>rx_bayang_protocol_telemetry_autobind.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\rx_bayang_protocol_telemetry_autobind.c</FilePath>
-            </File>
-            <File>
-              <FileName>rx_dsm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\rx_dsm.c</FilePath>
-            </File>
-            <File>
-              <FileName>rx_crsf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\rx_crsf.c</FilePath>
             </File>
           </Files>
         </Group>

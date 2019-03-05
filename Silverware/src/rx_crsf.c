@@ -2,7 +2,6 @@
 #include "stm32f0xx_usart.h"
 #include <stdio.h>
 #include "drv_serial.h"
-#include "config.h"
 #include "drv_time.h"
 #include "defines.h"
 #include "util.h"

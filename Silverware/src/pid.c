@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include "pid.h"
 #include "util.h"
-#include "config.h"
 #include "led.h"
 #include "defines.h"
 #include "math.h"

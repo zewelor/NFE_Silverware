@@ -1,4 +1,8 @@
 
+#include "hardware.h"
+
+// gcc warnings in main.c
+
 // defines for things that do not normally need changing
 
 #define MOTOR_BL 0
@@ -255,12 +259,131 @@
 #define	MFILT1_HZ_500	0.836544
 
 
+//things moved from old config.h below
+
+#ifdef LVC_LOWER_THROTTLE
+#define SWITCHABLE_FEATURE_2
+#endif
+
+#ifdef INVERT_YAW_PID
+#define SWITCHABLE_FEATURE_3
+#endif
+
+#ifdef ALIENWHOOP_ZERO_FILTERING
+#define KALMAN_GYRO
+#define GYRO_FILTER_PASS1 HZ_90
+#define  DTERM_LPF_2ND_HZ 100
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_50
+#define SWITCHABLE_MOTOR_FILTER2_ALPHA MFILT1_HZ_90
+#define SWITCHABLE_FEATURE_1
+#endif
+
+#ifdef WEAK_FILTERING
+#define KALMAN_GYRO
+#define GYRO_FILTER_PASS1 HZ_90
+#define  DTERM_LPF_2ND_HZ 100
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
+#endif
+
+#ifdef STRONG_FILTERING
+#define KALMAN_GYRO
+#define GYRO_FILTER_PASS1 HZ_80
+#define  DTERM_LPF_2ND_HZ 90
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_80
+#endif
+
+#ifdef VERY_STRONG_FILTERING
+#define KALMAN_GYRO
+#define GYRO_FILTER_PASS1 HZ_70
+#define  DTERM_LPF_2ND_HZ 80
+#define MOTOR_FILTER2_ALPHA MFILT1_HZ_70
+#endif
+
+#ifdef BETA_FILTERING
+	#if (!defined(KALMAN_GYRO) && !defined(PT1_GYRO)) || (!defined(GYRO_FILTER_PASS1) && !defined(GYRO_FILTER_PASS2))
+		#define SOFT_LPF_NONE
+	#endif
+#endif
+
+#define GYRO_LOW_PASS_FILTER 0
+
+#define DISABLE_FLIP_SEQUENCER  //**************todo adapt into turtle mode
+#define STARTFLIP CHAN_OFF     //**************todo adapt into turtle mode
 
 
+// *************motor curve to use - select one
+// *************the pwm frequency has to be set independently
+#define MOTOR_CURVE_NONE
+
+// loop time in uS
+// this affects soft gyro lpf frequency if used
+#define LOOPTIME 1000
+
+// failsafe time in uS
+#define FAILSAFETIME 1000000  // one second
 
 
+// enable motors if pitch / roll controls off center (at zero throttle)
+// possible values: 0 / 1
+// use in acro build only
+#define ENABLESTIX 0
+#define ENABLESTIX_TRESHOLD 0.3
+#define ENABLESTIX_TIMEOUT 1e6
 
 
+// define logic - do not change
+///////////////
+
+#pragma diag_warning 1035 , 177 , 4017
+#pragma diag_error 260
+
+//--fpmode=fast
+
+// overclock to 64Mhz
+
+#define ENABLE_OVERCLOCK
+
+// used for pwm calculations
+#ifdef ENABLE_OVERCLOCK
+#define SYS_CLOCK_FREQ_HZ 64000000
+#else
+#define SYS_CLOCK_FREQ_HZ 48000000
+#endif
+
+#ifdef MOTOR_BEEPS
+#ifdef USE_ESC_DRIVER
+#warning "MOTOR BEEPS_WORKS WITH BRUSHED MOTORS ONLY"
+#endif
+#endif
+
+// for the ble beacon to work after in-flight reset
+#ifdef RX_BAYANG_PROTOCOL_BLE_BEACON
+#undef STOP_LOWBATTERY
+#endif
+
+
+// The following define can always be left uncommented. It just gathers all analog aux PID settings together into one define.
+#if defined USE_ANALOG_AUX && (defined ANALOG_R_P || defined ANALOG_R_I || defined ANALOG_R_D || defined ANALOG_P_P || defined ANALOG_P_I || defined ANALOG_P_D || defined ANALOG_Y_P || defined ANALOG_Y_I || defined ANALOG_Y_D || defined ANALOG_RP_P || defined ANALOG_RP_I || defined ANALOG_RP_D || defined ANALOG_RP_PD)
+    #define ANALOG_AUX_PIDS
+#endif
+
+// *************flash save method
+// *************flash_save 1: pids + accel calibration
+// *************flash_save 2: accel calibration to option bytes
+#define FLASH_SAVE1
+//#define FLASH_SAVE2
+
+// *************rate in deg/sec 
+// *************for angle mode
+#define LEVEL_MAX_RATE 230.0    //Roll & Pitch axis          //todo*********this feature is useless - evaluate and repair
+
+// *************compensation for battery voltage vs throttle drop
+#define VDROP_FACTOR 0.7
+// *************calculate above factor automatically
+#define AUTO_VDROP_FACTOR
+
+// *************voltage hysteresis in volts
+#define HYST 0.10
 
 
 

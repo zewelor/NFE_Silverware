@@ -35,17 +35,15 @@ THE SOFTWARE.
 
 #include "binary.h"
 #include "drv_spi.h"
-
 #include "project.h"
 #include "xn297.h"
 #include "drv_time.h"
 #include <stdio.h>
-#include "config.h"
 #include "defines.h"
-
 #include "rx_bayang.h"
-
 #include "util.h"
+
+
 #define RX_MODE_BIND RXMODE_BIND
 #define RX_MODE_NORMAL RXMODE_NORMAL
 

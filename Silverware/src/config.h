@@ -1,5 +1,4 @@
-#include "defines.h"
-#include "hardware.h"
+
 
 //Universal pids are already loaded for 6mm and 7mm whoops by default.  Adjust pids in pid.c file for any non whoop builds.  
 
@@ -54,9 +53,7 @@
 #define BF_EXPO_YAW 0.00
 #endif
 
-// *************rate in deg/sec 
-// *************for angle mode
-#define LEVEL_MAX_RATE 230.0    //Roll & Pitch axis
+
 
 // *************max angle for level mode
 #define LEVEL_MAX_ANGLE 65.0f
@@ -123,7 +120,7 @@
 // *************if no channel is assigned but buzzer is set to CHAN_ON - buzzer will activate on LVC and FAILSAFE.
 //#define BUZZER_ENABLE CHAN_OFF
 
-// *************start in level mode for toy tx.
+// *************start in level mode for toy tx.  Must comment out STICK_TRAVEL_CHECK to assign CH_AUX1 to an aux feature
 //#define AUX1_START_ON
 
 // *************automatically remove center bias in toy tx ( needs throttle off for 1 second )
@@ -139,11 +136,6 @@
 #define PID_VOLTAGE_COMPENSATION
 #define LEVELMODE_PID_ATTENUATION 0.90f  //used to prevent oscillations in angle modes with pid_voltage_compensation enabled due to high pids
 
-// *************compensation for battery voltage vs throttle drop
-#define VDROP_FACTOR 0.7
-// *************calculate above factor automatically
-#define AUTO_VDROP_FACTOR
-
 // *************lower throttle when battery below threshold - forced landing low voltage cutoff
 // *************THIS FEATURE WILL BE OFF BY DEFAULT EVEN WHEN DEFINED - USE STICK GESTURE LEFT-LEFT-LEFT TO ACTIVATE THEN DOWN-DOWN-DOWN TO SAVE AS ON
 // *************Led light will blink once when LVC forced landing is turned on, blink twice when turned off, and will blink multiple times upon save command
@@ -158,9 +150,6 @@
 
 // *************voltage to start warning led blinking
 #define VBATTLOW 3.5
-
-// *************voltage hysteresis in volts
-#define HYST 0.10
 
 // *************automatic voltage telemetry correction/calibration factor - change the values below if voltage telemetry is inaccurate
 // Corrects for an offset error in the telemetry measurement (same offset across the battery voltage range)
@@ -297,11 +286,6 @@
 #define PID_GESTURE_TUNING
 #define COMBINE_PITCH_ROLL_PID_TUNING
 
-// *************flash save method
-// *************flash_save 1: pids + accel calibration
-// *************flash_save 2: accel calibration to option bytes
-#define FLASH_SAVE1
-//#define FLASH_SAVE2
 
 // *************enable inverted flight code ( brushless only )
 //#define INVERTED_ENABLE
@@ -338,10 +322,6 @@
 //#define ANALOG_Y_P   CHAN_14 // Adjust Yaw only
 //#define ANALOG_Y_I   CHAN_14
 //#define ANALOG_Y_D   CHAN_15
-// The following define can always be left uncommented. It just gathers all analog aux PID settings together into one define.
-#if defined USE_ANALOG_AUX && (defined ANALOG_R_P || defined ANALOG_R_I || defined ANALOG_R_D || defined ANALOG_P_P || defined ANALOG_P_I || defined ANALOG_P_D || defined ANALOG_Y_P || defined ANALOG_Y_I || defined ANALOG_Y_D || defined ANALOG_RP_P || defined ANALOG_RP_I || defined ANALOG_RP_D || defined ANALOG_RP_PD)
-    #define ANALOG_AUX_PIDS
-#endif
 
 
 
@@ -349,9 +329,10 @@
 //#############################################################################################################################
 //#############################################################################################################################
 // debug / other things
-// this should not be usually changed
+// things that should not be usually changed
 //#############################################################################################################################
 //#############################################################################################################################
+
 
 //enables use of stick accelerator and stick transition for d term lpf 1 & 2
 #define ADVANCED_PID_CONTROLLER
@@ -373,55 +354,6 @@
 // flash saving features
 //#define DISABLE_GESTURES2
 
-#ifdef LVC_LOWER_THROTTLE
-#define SWITCHABLE_FEATURE_2
-#endif
-
-#ifdef INVERT_YAW_PID
-#define SWITCHABLE_FEATURE_3
-#endif
-
-#ifdef ALIENWHOOP_ZERO_FILTERING
-#define KALMAN_GYRO
-#define GYRO_FILTER_PASS1 HZ_90
-#define  DTERM_LPF_2ND_HZ 100
-#define MOTOR_FILTER2_ALPHA MFILT1_HZ_50
-#define SWITCHABLE_MOTOR_FILTER2_ALPHA MFILT1_HZ_90
-#define SWITCHABLE_FEATURE_1
-#endif
-
-#ifdef WEAK_FILTERING
-#define KALMAN_GYRO
-#define GYRO_FILTER_PASS1 HZ_90
-#define  DTERM_LPF_2ND_HZ 100
-#define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
-#endif
-
-#ifdef STRONG_FILTERING
-#define KALMAN_GYRO
-#define GYRO_FILTER_PASS1 HZ_80
-#define  DTERM_LPF_2ND_HZ 90
-#define MOTOR_FILTER2_ALPHA MFILT1_HZ_80
-#endif
-
-#ifdef VERY_STRONG_FILTERING
-#define KALMAN_GYRO
-#define GYRO_FILTER_PASS1 HZ_70
-#define  DTERM_LPF_2ND_HZ 80
-#define MOTOR_FILTER2_ALPHA MFILT1_HZ_70
-#endif
-
-#ifdef BETA_FILTERING
-	#if (!defined(KALMAN_GYRO) && !defined(PT1_GYRO)) || (!defined(GYRO_FILTER_PASS1) && !defined(GYRO_FILTER_PASS2))
-		#define SOFT_LPF_NONE
-	#endif
-#endif
-
-#define GYRO_LOW_PASS_FILTER 0
-
-#define DISABLE_FLIP_SEQUENCER
-#define STARTFLIP CHAN_OFF
-
 // disable motors for testing
 //#define NOMOTORS
 
@@ -429,323 +361,15 @@
 // #define MOTORS_TO_THROTTLE
 
 // throttle direct to motors for thrust measure as a flight mode
-//#define MOTORS_TO_THROTTLE_MODE MULTI_CHAN_8
-
-// *************motor curve to use - select one
-// *************the pwm frequency has to be set independently
-#define MOTOR_CURVE_NONE
-
-// loop time in uS
-// this affects soft gyro lpf frequency if used
-#define LOOPTIME 1000
-
-// failsafe time in uS
-#define FAILSAFETIME 1000000  // one second
-
-// debug things ( debug struct and other)
-//#define DEBUG
+//#define MOTORS_TO_THROTTLE_MODE CHAN_OFF
 
 // rxdebug structure
 //#define RXDEBUG
 
-// enable motors if pitch / roll controls off center (at zero throttle)
-// possible values: 0 / 1
-// use in acro build only
-#define ENABLESTIX 0
-#define ENABLESTIX_TRESHOLD 0.3
-#define ENABLESTIX_TIMEOUT 1e6
-
-// overclock to 64Mhz
-
-#define ENABLE_OVERCLOCK
-
-#pragma diag_warning 1035 , 177 , 4017
-#pragma diag_error 260
-
-//--fpmode=fast
-
-// define logic - do not change
-///////////////
-
-// used for pwm calculations
-#ifdef ENABLE_OVERCLOCK
-#define SYS_CLOCK_FREQ_HZ 64000000
-#else
-#define SYS_CLOCK_FREQ_HZ 48000000
-#endif
-
-#ifdef MOTOR_BEEPS
-#ifdef USE_ESC_DRIVER
-#warning "MOTOR BEEPS_WORKS WITH BRUSHED MOTORS ONLY"
-#endif
-#endif
-
-// for the ble beacon to work after in-flight reset
-#ifdef RX_BAYANG_PROTOCOL_BLE_BEACON
-#undef STOP_LOWBATTERY
-#endif
-
-// gcc warnings in main.c
-
-//Hardware target defines moved from hardware.h so that board selection of bwhoop or e011 can be performed in config.h file
-
-#ifdef BWHOOP
-//LEDS
-#define LED_NUMBER 2
-#define LED1PIN GPIO_Pin_2
-#define LED1PORT GPIOA
-#define LED2PIN GPIO_Pin_3
-#define LED2PORT GPIOA
-#define LED1_INVERT
-#define LED2_INVERT
-
-//SOFT I2C & GYRO
-#define SOFTI2C_SDAPIN GPIO_Pin_10
-#define SOFTI2C_SDAPORT GPIOA
-#define SOFTI2C_SCLPIN GPIO_Pin_9
-#define SOFTI2C_SCLPORT GPIOA
-#define SOFTI2C_GYRO_ADDRESS 0x68
-#define GYRO_ID_1 0x68
-#define GYRO_ID_2 0x98 // new id
-#define GYRO_ID_3 0x7D
-#define GYRO_ID_4 0x72
-#define SENSOR_ROTATE_90_CW
-
-// SPI PINS DEFINITONS & RADIO
-#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF)
-#define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_3
-#define SERIAL_RX_PIN GPIO_Pin_14
-#define SERIAL_RX_PORT GPIOA
-#define SERIAL_RX_SOURCE GPIO_PinSource14
-#define SERIAL_RX_CHANNEL GPIO_AF_1
-#define SOFTSPI_NONE
-//dummy spi placeholders
-#define SPI_MOSI_PIN GPIO_Pin_x
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_y
-#define SPI_CLK_PORT GPIOA
-#define SPI_SS_PIN GPIO_Pin_z
-#define SPI_SS_PORT GPIOA
-#define RADIO_CHECK
-#else
-#define SOFTSPI_3WIRE
-#define SPI_MOSI_PIN GPIO_Pin_0
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_1
-#define SPI_CLK_PORT GPIOF
-#define SPI_SS_PIN GPIO_Pin_0
-#define SPI_SS_PORT GPIOF
-#define RADIO_XN297L
-#define RADIO_CHECK
-#endif
-
-//VOLTAGE DIVIDER
-#define BATTERYPIN GPIO_Pin_5
-#define BATTERYPORT GPIOA
-#define BATTERY_ADC_CHANNEL ADC_Channel_5
-#define ADC_SCALEFACTOR 0.001364
-#define ADC_REF 1.17857f
-
-// MOTOR PINS
-#define MOTOR0_PIN_PB1 // motor 0 back-left
-#define MOTOR1_PIN_PA4 // motor 1 front-left
-#define MOTOR2_PIN_PA6 // motor 2 back-right
-#define MOTOR3_PIN_PA7 // motor 3 front-right
-#endif
-
-#ifdef E011
-//LEDS
-#define LED_NUMBER 2
-#define LED1PIN GPIO_Pin_2
-#define LED1PORT GPIOA
-#define LED2PIN GPIO_Pin_3
-#define LED2PORT GPIOA
-#define LED1_INVERT
-#define LED2_INVERT
-
-//SOFT I2C & GYRO
-#define SOFTI2C_SDAPIN GPIO_Pin_10
-#define SOFTI2C_SDAPORT GPIOA
-#define SOFTI2C_SCLPIN GPIO_Pin_9
-#define SOFTI2C_SCLPORT GPIOA
-#define SOFTI2C_GYRO_ADDRESS 0x68
-#define GYRO_ID_1 0x68
-#define GYRO_ID_2 0x98 // new id
-#define GYRO_ID_3 0x7D
-#define GYRO_ID_4 0x72
-#define SENSOR_ROTATE_90_CW
-#define SOFTI2C_PUSHPULL_CLK
-
-// SPI PINS DEFINITONS & RADIO
-#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF) 
-#define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_3
-#define SERIAL_RX_PIN GPIO_Pin_14
-#define SERIAL_RX_PORT GPIOA
-#define SERIAL_RX_SOURCE GPIO_PinSource14
-#define SERIAL_RX_CHANNEL GPIO_AF_1
-#define SOFTSPI_NONE
-//dummy spi placeholders
-#define SPI_MOSI_PIN GPIO_Pin_x
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_y
-#define SPI_CLK_PORT GPIOA
-#define SPI_SS_PIN GPIO_Pin_z
-#define SPI_SS_PORT GPIOA
-#define RADIO_CHECK
-#else
-#define SOFTSPI_3WIRE
-#define SPI_MOSI_PIN GPIO_Pin_0
-#define SPI_MOSI_PORT GPIOF
-#define SPI_CLK_PIN GPIO_Pin_1
-#define SPI_CLK_PORT GPIOF
-#define SPI_SS_PIN GPIO_Pin_0
-#define SPI_SS_PORT GPIOA
-#define RADIO_XN297L
-#define RADIO_CHECK
-#endif
-
-//VOLTAGE DIVIDER
-#define BATTERYPIN GPIO_Pin_5
-#define BATTERYPORT GPIOA
-#define BATTERY_ADC_CHANNEL ADC_Channel_5
-#define ADC_SCALEFACTOR 0.001364
-#define ADC_REF 1.17857f
-
-// Assingment of pin to motor
-#define MOTOR0_PIN_PA6 // motor 0 back-left
-#define MOTOR1_PIN_PA4 // motor 1 front-left
-#define MOTOR2_PIN_PB1 // motor 2 back-right
-#define MOTOR3_PIN_PA7 // motor 3 front-right
-#endif
-
-#ifdef H8mini_blue_board
-//LEDS
-#define LED_NUMBER 1
-#define LED1PIN GPIO_Pin_1
-#define LED1PORT GPIOF
-#define LED2PIN GPIO_Pin_3
-#define LED2PORT GPIOA
-
-//SOFT I2C & GYRO
-#define SOFTI2C_SDAPIN GPIO_Pin_10
-#define SOFTI2C_SDAPORT GPIOA
-#define SOFTI2C_SCLPIN GPIO_Pin_9
-#define SOFTI2C_SCLPORT GPIOA
-#define SOFTI2C_GYRO_ADDRESS 0x68
-#define SOFTI2C_PUSHPULL_CLK
-#define GYRO_ID_1 0x68
-#define GYRO_ID_2 0x78 // common h8 gyro
-#define GYRO_ID_3 0x7D
-#define GYRO_ID_4 0x72
-#define SENSOR_ROTATE_180
-
-// SPI PINS DEFINITONS & RADIO
-#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF) 
-#define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_3
-#define SERIAL_RX_PIN GPIO_Pin_14
-#define SERIAL_RX_PORT GPIOA
-#define SERIAL_RX_SOURCE GPIO_PinSource14
-#define SERIAL_RX_CHANNEL GPIO_AF_1
-#define SOFTSPI_NONE
-//dummy spi placeholders
-#define SPI_MOSI_PIN GPIO_Pin_x
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_y
-#define SPI_CLK_PORT GPIOA
-#define SPI_SS_PIN GPIO_Pin_z
-#define SPI_SS_PORT GPIOA
-#define RADIO_CHECK
-#else
-#define SOFTSPI_3WIRE
-#define SPI_MOSI_PIN GPIO_Pin_1
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_2
-#define SPI_CLK_PORT GPIOA
-#define SPI_SS_PIN GPIO_Pin_3
-#define SPI_SS_PORT GPIOA
-#define RADIO_XN297L
-#define RADIO_CHECK
-#endif
-
-//VOLTAGE DIVIDER
-#define BATTERYPIN GPIO_Pin_5
-#define BATTERYPORT GPIOA
-#define BATTERY_ADC_CHANNEL ADC_Channel_5
-#define ADC_SCALEFACTOR 0.001364
-#define ADC_REF 1.17857f
-
-// Assingment of pin to motor
-#define MOTOR0_PIN_PA6 // motor 0 back-left
-#define MOTOR1_PIN_PA4 // motor 1 front-left
-#define MOTOR2_PIN_PB1 // motor 2 back-right
-#define MOTOR3_PIN_PA7 // motor 3 front-right
-#endif
-
-#ifdef Alienwhoop_ZERO
-//LEDS
-#define LED_NUMBER 1
-#define LED1PIN GPIO_Pin_0
-#define LED1PORT GPIOF
-#define LED2PIN GPIO_Pin_0
-#define LED2PORT GPIOA
-
-//SOFT I2C & GYRO
-#define SOFTI2C_SDAPIN GPIO_Pin_10
-#define SOFTI2C_SDAPORT GPIOA
-#define SOFTI2C_SCLPIN GPIO_Pin_9
-#define SOFTI2C_SCLPORT GPIOA
-#define SOFTI2C_GYRO_ADDRESS 0x68
-//#define SOFTI2C_GYRO_ADDRESS 0x69
-#define GYRO_ID_1 0x68
-#define GYRO_ID_2 0x98 // new id
-#define GYRO_ID_3 0x78
-#define GYRO_ID_4 0x72 
-#define SENSOR_ROTATE_90_CCW
-
-// SPI PINS DEFINITONS & RADIO
-#if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF) 
-#define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_2
-#define SERIAL_RX_SPEKBIND_RX_PIN GPIO_Pin_3
-#define SERIAL_RX_PIN GPIO_Pin_3
-#define SERIAL_RX_PORT GPIOA
-#define SERIAL_RX_SOURCE GPIO_PinSource3
-#define SERIAL_RX_CHANNEL GPIO_AF_1
-#define SOFTSPI_NONE
-//dummy spi placeholders
-#define SPI_MOSI_PIN GPIO_Pin_x
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_y
-#define SPI_CLK_PORT GPIOA
-#define SPI_SS_PIN GPIO_Pin_z
-#define SPI_SS_PORT GPIOA
-#define RADIO_CHECK
-#else
-#define SOFTSPI_3WIRE
-#define SPI_MOSI_PIN GPIO_Pin_3
-#define SPI_MOSI_PORT GPIOA
-#define SPI_CLK_PIN GPIO_Pin_2
-#define SPI_CLK_PORT GPIOA
-#define SPI_SS_PIN GPIO_Pin_1
-#define SPI_SS_PORT GPIOA
-#define RADIO_CHECK
-#define RADIO_XN297L
-#endif
-
-//VOLTAGE DIVIDER
-#define BATTERYPIN GPIO_Pin_5
-#define BATTERYPORT GPIOA
-#define BATTERY_ADC_CHANNEL ADC_Channel_5
-#define ADC_SCALEFACTOR 0.002423
-#define ADC_REF 1.0f
+// debug things ( debug struct and other)
+//#define DEBUG
 
 
-// MOTOR PINS
-// MOTOR PINS
-#define MOTOR0_PIN_PA7
-//#define MOTOR1_PIN_PA4  //2nd Draft prototype patch
-//#define MOTOR2_PIN_PB1  //2nd Draft prototype patch
-#define MOTOR1_PIN_PB1
-#define MOTOR2_PIN_PA4
-#define MOTOR3_PIN_PA6
-#endif
+
+
 

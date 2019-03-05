@@ -35,7 +35,6 @@ THE SOFTWARE.
 #include "drv_adc.h"
 #include "drv_time.h"
 #include "drv_softi2c.h"
-#include "config.h"
 #include "drv_pwm.h"
 #include "drv_adc.h"
 #include "drv_gpio.h"
