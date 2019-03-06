@@ -81,10 +81,16 @@
 
 //**DO NOT ENABLE ESC DRIVER WITH BRUSHED MOTORS ATTACHED**
 
-#define USE_PWM_DRIVER
-//#define USE_ESC_DRIVER
-//#define USE_DSHOT_DMA_DRIVER
-//#define USE_DSHOT_DRIVER_BETA
+#if defined BRUSHLESS_CONVERSION || defined BRUSHLESS_TARGET
+	#define USE_DSHOT_DMA_DRIVER
+	//#define USE_DSHOT_DRIVER_BETA
+	//#define USE_ESC_DRIVER
+#else
+	#define USE_PWM_DRIVER
+#endif
+
+
+
 
 
 //FC must have MOSFETS and motor pulldown resistors removed. MAY NOT WORK WITH ALL ESCS

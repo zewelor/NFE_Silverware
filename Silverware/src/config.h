@@ -253,13 +253,7 @@
 // *************mix lower throttle reduces thrust imbalances by reducing throttle proportionally to the adjustable reduction percent
 // *************mix increase throttle increases the authority of the pid controller at lowest throttle values like airmode when combined with idle up
 // *************mix3 has a stronger effect and works better with brushless
-#define MIX_LOWER_THROTTLE
-#define MIX_THROTTLE_REDUCTION_PERCENT 10
-//#define MIX_INCREASE_THROTTLE
 
-//#define MIX_LOWER_THROTTLE_3
-#define MIX_INCREASE_THROTTLE_3
-#define MIX_THROTTLE_INCREASE_MAX 0.2f
 
 //**************joelucid's yaw fix
 #define YAW_FIX
@@ -334,6 +328,9 @@
 //#############################################################################################################################
 
 
+// *************DEFINE FLIGHT CONTROLLER HARDWARE HAS BEEN MODIFIED FOR BRUSHLESS CONVERSION   **WARNING**DO NOT ENABLE DSHOT DMA ESC DRIVER WITH BRUSHED MOTORS ATTACHED**
+//#define BRUSHLESS_CONVERSION
+
 //enables use of stick accelerator and stick transition for d term lpf 1 & 2
 #define ADVANCED_PID_CONTROLLER
 
@@ -368,6 +365,8 @@
 
 // debug things ( debug struct and other)
 //#define DEBUG
+
+
 
 
 

@@ -385,6 +385,20 @@
 // *************voltage hysteresis in volts
 #define HYST 0.10
 
+// *************MIXER SETTINGS & LIMITS
+
+
+#if defined BRUSHLESS_CONVERSION || defined BRUSHLESS_TARGET
+	#define BRUSHLESS_MIX_SCALING
+#else
+	#define MIX_LOWER_THROTTLE
+	#define MIX_THROTTLE_REDUCTION_PERCENT 10
+	//#define MIX_INCREASE_THROTTLE
+
+	//#define MIX_LOWER_THROTTLE_3
+	#define MIX_INCREASE_THROTTLE_3
+	#define MIX_THROTTLE_INCREASE_MAX 0.2f
+#endif
 
 
 

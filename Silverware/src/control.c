@@ -677,6 +677,50 @@ else
        		}
 
 
+// MIXER SCALING
+
+#ifdef BRUSHLESS_MIX_SCALING
+		#undef MIX_LOWER_THROTTLE
+		#undef MIX_INCREASE_THROTTLE
+		#undef MIX_LOWER_THROTTLE_3
+		#undef MIX_INCREASE_THROTTLE_3
+
+         static int mixScaling;
+         if (onground) mixScaling = 0;
+         // only enable once really in the air
+         else if (in_air) mixScaling = 1;
+         if (mixScaling) {
+						 //ledcommand=1;
+             float minMix = 1000.0f;
+             float maxMix = -1000.0f;
+             for (int i = 0; i<4; i++) {
+                 if (mix[i] < minMix) minMix = mix[i];
+                 if (mix[i] > maxMix) maxMix = mix[i];
+             }
+             float mixRange = maxMix - minMix;
+             float reduceAmount = 0.0f;
+             if (mixRange > 1.0f) {
+                 float scale = 1.0f / mixRange;
+                 for (int i = 0; i<4; i++)
+                     mix[i] *= scale;
+                 minMix *= scale;
+                 reduceAmount = minMix;
+             } else {
+                 if (maxMix > 1.0f)
+                     reduceAmount = maxMix - 1.0f;
+                 else if (minMix < 0.0f)
+                     reduceAmount = minMix;
+             }
+             if (reduceAmount != 0.0f)
+                 for (int i=0; i<4; i++)
+                     mix[i] -= reduceAmount;
+         }
+#endif            
+        					
+
+
+					
+
 #if ( defined MIX_LOWER_THROTTLE || defined MIX_INCREASE_THROTTLE)
 
 //#define MIX_INCREASE_THROTTLE
@@ -858,8 +902,7 @@ if ( overthrottle > 0.1f) ledcommand = 1;
 }
 #endif
 
-            
-            
+    
             
 thrsum = 0;		
 				
@@ -891,12 +934,25 @@ thrsum = 0;
 		#endif
 		#endif
 
+
 		#ifdef MOTOR_MIN_ENABLE
 		if (mix[i] < (float) MOTOR_MIN_VALUE)
 		{
 			mix[i] = (float) MOTOR_MIN_VALUE;
 		}
 		#endif
+
+
+		#ifdef MOTOR_MIN_ENABLE2
+		if (mix[i] < (float) MOTOR_MIN_VALUE)
+		{
+			float motor_min_adjust = (float) MOTOR_MIN_VALUE - mix[i];
+			for (int i = 0; i<4; i++) {
+			mix[i] += motor_min_adjust;
+			}
+		}
+		#endif
+
 		
 			
 		#ifndef NOMOTORS
