@@ -936,12 +936,21 @@ thrsum = 0;
 
 
 		#ifdef MOTOR_MIN_ENABLE
-		if (mix[i] < (float) MOTOR_MIN_VALUE)
-		{
-			mix[i] = (float) MOTOR_MIN_VALUE;
-		}
+			#ifdef BRUSHLESS_MIX_SCALING
+				if (mix[i] < (float) MOTOR_MIN_VALUE)
+				{
+					float motor_min_adjust = (float) MOTOR_MIN_VALUE - mix[i];
+					for (int i = 0; i<4; i++) {
+					mix[i] += motor_min_adjust;
+					}
+				}			
+			#else
+				if (mix[i] < (float) MOTOR_MIN_VALUE)
+				{
+					mix[i] = (float) MOTOR_MIN_VALUE;
+				}
+			#endif
 		#endif
-
 
 		#ifdef MOTOR_MIN_ENABLE2
 		if (mix[i] < (float) MOTOR_MIN_VALUE)
