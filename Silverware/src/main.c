@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 
 #include "project.h"
-
+#include "defines.h"
 #include "led.h"
 #include "util.h"
 #include "sixaxis.h"
@@ -43,7 +43,6 @@ THE SOFTWARE.
 #include "drv_spi.h"
 #include "control.h"
 #include "pid.h"
-#include "defines.h"
 #include "drv_i2c.h"
 #include "drv_softi2c.h"
 #include "drv_serial.h"
