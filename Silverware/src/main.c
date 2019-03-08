@@ -235,7 +235,7 @@ while ( count < 64 )
 	
 #ifdef STOP_LOWBATTERY
 // infinite loop
-if ( vbattfilt < (float) 3.3f) failloop(2);
+if ( vbattfilt/LIPO_CELL_COUNT < (float) 3.3f) failloop(2);
 #endif
 
 
@@ -335,7 +335,7 @@ if ( liberror )
 		// ( or they can use a single filter)		
 		lpf ( &thrfilt , thrsum , 0.9968f);	// 0.5 sec at 1.6ms loop time	
 
-        static float vbattfilt_corr = 4.2;
+        static float vbattfilt_corr = 4.2 * LIPO_CELL_COUNT;
         // li-ion battery model compensation time decay ( 18 seconds )
         lpf ( &vbattfilt_corr , vbattfilt , FILTERCALC( 1000 , 18000e3) );
 	

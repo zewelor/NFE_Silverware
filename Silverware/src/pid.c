@@ -113,19 +113,33 @@ float pidki_init[PIDNUMBER] = { 0, 0, 0 };
 float pidkd_init[PIDNUMBER] = { 0, 0, 0 };
 
 
-//************************************Setpoint Weight****************************************
-// "setpoint weighting" 0.0 - 1.0 where 1.0 = normal pid
-#define ENABLE_SETPOINT_WEIGHTING
-//            Roll   Pitch   Yaw
-//float b[3] = { 0.97 , 0.98 , 0.95};   //RACE
-float b[3] = { 0.93 , 0.93 , 0.9};      //FREESTYLE
+//************************************Setpoint Weight & Limits********************************
+#ifdef BRUSHLESS_TARGET
 
-/// output limit			
-const float outlimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+	/// output limit	
+	const float outlimit[PIDNUMBER] = { 0.8 , 0.8 , 0.4 };
 
-// limit of integral term (abs)
-const float integrallimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+	// limit of integral term (abs)
+	const float integrallimit[PIDNUMBER] = { 0.8 , 0.8 , 0.4 };
 
+#else  //BRUSHED TARGET
+
+	// "p term setpoint weighting" 0.0 - 1.0 where 1.0 = normal pid
+	#define ENABLE_SETPOINT_WEIGHTING
+	//            Roll   Pitch   Yaw
+	//float b[3] = { 0.97 , 0.98 , 0.95};   //BRUSHED RACE
+	float b[3] = { 0.93 , 0.93 , 0.9};      //BRUSHED FREESTYLE
+
+	/// output limit	
+	const float outlimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+
+	// limit of integral term (abs)
+	const float integrallimit[PIDNUMBER] = { 1.7 , 1.7 , 0.5 };
+	
+#endif
+	
+	
+	
 //#define RECTANGULAR_RULE_INTEGRAL
 //#define MIDPOINT_RULE_INTEGRAL
 #define SIMPSON_RULE_INTEGRAL
@@ -461,7 +475,7 @@ void pid_precalc()
 	timefactor = 0.0032f / looptime;
 	
 #ifdef PID_VOLTAGE_COMPENSATION
-	v_compensation = mapf ( vbattfilt , 3.00 , 4.00 , PID_VC_FACTOR , 1.00);
+	v_compensation = mapf ( (vbattfilt/LIPO_CELL_COUNT) , 3.00 , 4.00 , PID_VC_FACTOR , 1.00);
 	if( v_compensation > PID_VC_FACTOR) v_compensation = PID_VC_FACTOR;
 	if( v_compensation < 1.00f) v_compensation = 1.00;
 	#ifdef LEVELMODE_PID_ATTENUATION

@@ -79,9 +79,13 @@
 // esc driver = servo type signal for brushless esc
 // pins PA0 - PA11 , PB0 , PB1
 
+#ifdef BRUSHLESS_CONVERSION
+	#define BRUSHLESS_TARGET
+#endif
+
 //**DO NOT ENABLE ESC DRIVER WITH BRUSHED MOTORS ATTACHED**
 
-#if defined BRUSHLESS_CONVERSION || defined BRUSHLESS_TARGET
+#ifdef BRUSHLESS_TARGET
 	#define USE_DSHOT_DMA_DRIVER
 	//#define USE_DSHOT_DRIVER_BETA
 	//#define USE_ESC_DRIVER

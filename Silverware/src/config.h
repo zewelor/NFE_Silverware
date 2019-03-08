@@ -132,6 +132,9 @@
 //**********************************************************************************************************************
 //***********************************************VOLTAGE SETTINGS*******************************************************
 
+// ************* Set your lipo cell count
+#define LIPO_CELL_COUNT 1
+
 // ************* Raises pids automatically as battery voltage drops in flight.
 #define PID_VOLTAGE_COMPENSATION
 #define LEVELMODE_PID_ATTENUATION 0.90f  //used to prevent oscillations in angle modes with pid_voltage_compensation enabled due to high pids
@@ -139,25 +142,28 @@
 // *************lower throttle when battery below threshold - forced landing low voltage cutoff
 // *************THIS FEATURE WILL BE OFF BY DEFAULT EVEN WHEN DEFINED - USE STICK GESTURE LEFT-LEFT-LEFT TO ACTIVATE THEN DOWN-DOWN-DOWN TO SAVE AS ON
 // *************Led light will blink once when LVC forced landing is turned on, blink twice when turned off, and will blink multiple times upon save command
+// *************Enter values in volts per cell
 #define LVC_LOWER_THROTTLE
 #define LVC_LOWER_THROTTLE_VOLTAGE 3.30
 #define LVC_LOWER_THROTTLE_VOLTAGE_RAW 2.70
 #define LVC_LOWER_THROTTLE_KP 3.0
 
-// *************do not start software if battery is too low (below 3.3v)
+// *************do not start software if battery is too low (below 3.3v per cell)
 // *************flashes 2 times repeatedly at startup
 #define STOP_LOWBATTERY
 
-// *************voltage to start warning led blinking
+// *************voltage per cell to start warning led blinking
 #define VBATTLOW 3.5
 
 // *************automatic voltage telemetry correction/calibration factor - change the values below if voltage telemetry is inaccurate
-// Corrects for an offset error in the telemetry measurement (same offset across the battery voltage range)
+// *************Corrects for an offset error in the telemetry measurement (same offset across the battery voltage range)
+// *************Enter values in total battery volts
 #define ACTUAL_BATTERY_VOLTAGE 4.20
 #define REPORTED_TELEMETRY_VOLTAGE 4.20
 
 // *************two-point automatic voltage telemetry correction/calibration factor - change the values below if voltage telemetry is inaccurate
-// Use this method when the difference at the high end is different than the difference at the low end. Corrects both slope and offset of the _assumed_ linear error.
+// *************Use this method when the difference at the high end is different than the difference at the low end. Corrects both slope and offset of the _assumed_ linear error.
+// *************Enter values in total battery volts
 //#define USE_TWO_POINT_VOLTAGE_CORRECTION
 //#define ACTUAL_BATTERY_VOLTAGE_LO 3.60
 //#define ACTUAL_BATTERY_VOLTAGE_HI 4.20
