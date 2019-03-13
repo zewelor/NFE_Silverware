@@ -217,20 +217,19 @@ aux[CH_AUX1] = 1;
 	
 int count = 0;
 	
-while ( count < 64 )
+while ( count < 5000 )
 {
-	vbattfilt += adc_read(0);
-	delay(1000);
+	float bootadc = adc_read(0)*vreffilt;
+	lpf ( &vreffilt , adc_read(1)  , 0.9968f);
+	lpf ( &vbattfilt , bootadc , 0.9968f);
 	count++;
 }
+	
 #ifdef RX_BAYANG_BLE_APP
    // for randomising MAC adddress of ble app - this will make the int = raw float value        
     random_seed =  *(int *)&vbattfilt ; 
     random_seed = random_seed&0xff;
 #endif
- vbattfilt = vbattfilt/64;	
-// startvref = startvref/64;
-
 	
 #ifdef STOP_LOWBATTERY
 // infinite loop
