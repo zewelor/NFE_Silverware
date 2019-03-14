@@ -88,10 +88,14 @@ void adc_init(void)
  
  // reference is measured a 3.3v, we are powered by 2.8, so a 1.17 multiplier
  // different vccs will translate to a different adc scale factor,
- // so actual vcc is not important as long as the voltage is correct in the end 
- // vref_cal =  1.17857f * (float) ( adcref_read ((adcrefcal *) 0x1FFFF7BA) );
-	vref_cal =  ADC_REF * (float) ( adcref_read ((adcrefcal *) 0x1FFFF7BA) );
+	vref_cal =  (3.3f/ (float)ADC_REF_VOLTAGE) * (float) ( adcref_read ((adcrefcal *) 0x1FFFF7BA) );
 }
+
+#ifndef ADC_SCALEFACTOR
+						// 12 bit ADC has 4096 steps
+						//scalefactor = (vref/4096) * (R1 + R2)/R2
+#define ADC_SCALEFACTOR ((float)ADC_REF_VOLTAGE/4096)*((float)VOLTAGE_DIVIDER_R1 + (float)VOLTAGE_DIVIDER_R2)*(1/(float)VOLTAGE_DIVIDER_R2)
+#endif
 
 float adc_read(int channel)
 {
