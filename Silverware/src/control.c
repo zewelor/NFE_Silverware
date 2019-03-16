@@ -936,15 +936,11 @@ thrsum = 0;
 
 
 		#ifdef MOTOR_MIN_ENABLE
-			#ifdef BRUSHLESS_MIX_SCALING
-				if (mix[i] < (float) MOTOR_MIN_VALUE)
-				{
-					float motor_min_adjust = (float) MOTOR_MIN_VALUE - mix[i];
-					for (int i = 0; i<4; i++) {
-					mix[i] += motor_min_adjust;
-					}
-				}			
-			#else
+			#ifdef BRUSHLESS_TARGET
+
+//take no action - min motor command is established in dshot protocol.     todo:  standardize motor minimum adjustment between brushed and brushless for simplicity
+
+			#else     //clipping style min motor command override
 				if (mix[i] < (float) MOTOR_MIN_VALUE)
 				{
 					mix[i] = (float) MOTOR_MIN_VALUE;
@@ -952,7 +948,7 @@ thrsum = 0;
 			#endif
 		#endif
 
-		#ifdef MOTOR_MIN_ENABLE2
+		#ifdef MOTOR_MIN_ENABLE2    // for testing purposes:  scaling style min motor command.  scales up all mix outputs so lowest motor is at min command
 		if (mix[i] < (float) MOTOR_MIN_VALUE)
 		{
 			float motor_min_adjust = (float) MOTOR_MIN_VALUE - mix[i];
