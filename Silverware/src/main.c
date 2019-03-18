@@ -124,6 +124,7 @@ int in_air;
 int armed_state;
 int arming_release;
 int binding_while_armed = 1;
+float lipo_cell_count = 1;
 
 //Experimental Flash Memory Feature
 int flash_feature_1 = 0;
@@ -224,6 +225,20 @@ while ( count < 5000 )
 	lpf ( &vbattfilt , bootadc , 0.9968f);
 	count++;
 }
+
+#ifndef LIPO_CELL_COUNT
+for ( int i = 6 ; i > 0 ; i--)
+{
+		float cells = i;
+		if (vbattfilt/cells > 3.7f)
+		{	
+			lipo_cell_count = cells;
+			break;
+		}
+}
+#else
+		lipo_cell_count = (float)LIPO_CELL_COUNT;
+#endif
 	
 #ifdef RX_BAYANG_BLE_APP
    // for randomising MAC adddress of ble app - this will make the int = raw float value        
@@ -233,7 +248,7 @@ while ( count < 5000 )
 	
 #ifdef STOP_LOWBATTERY
 // infinite loop
-if ( vbattfilt/LIPO_CELL_COUNT < (float) 3.3f) failloop(2);
+if ( vbattfilt/lipo_cell_count < 3.3f) failloop(2);
 #endif
 
 
@@ -333,7 +348,7 @@ if ( liberror )
 		// ( or they can use a single filter)		
 		lpf ( &thrfilt , thrsum , 0.9968f);	// 0.5 sec at 1.6ms loop time	
 
-        static float vbattfilt_corr = 4.2 * LIPO_CELL_COUNT;
+        float vbattfilt_corr = 4.2f * lipo_cell_count;
         // li-ion battery model compensation time decay ( 18 seconds )
         lpf ( &vbattfilt_corr , vbattfilt , FILTERCALC( 1000 , 18000e3) );
 	
