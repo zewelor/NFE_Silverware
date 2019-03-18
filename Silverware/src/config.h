@@ -350,9 +350,11 @@
 #define TRIM_PITCH 0.0
 #define TRIM_ROLL 0.0
 
-// limit minimum motor output to a value (0.0 - 1.0)
-#define MOTOR_MIN_ENABLE
-#define MOTOR_MIN_VALUE 0.05
+// minimum motor output: *for brushed a % value (0.0 - 100.0)   *for brushless this sets digital idle % for DSHOT for any selection (fyi: old silverware dshot default would be 2.0 here)
+//****SELECT ONLY ONE
+#define MOTOR_MIN_COMMAND  5.0        //clipping style min motor command logic for brushed motors - cuts off values below limit
+//#define MOTOR_MIN_COMMAND2  5.0			//scaling style min motor command logic for brushed motors - scales up all motors by underlimit amount
+//#define MOTOR_MIN_COMMAND3  5.0			//mapping style min motor command logic for brushed motors - remaps entire motor output range 
 
 // flash saving features
 //#define DISABLE_GESTURES2

@@ -400,6 +400,15 @@
 #define	MFILT1_HZ_480	0.827956
 #define	MFILT1_HZ_500	0.836544
 
-#if defined (BRUSHLESS_MIX_SCALING) && !defined (BRUSHLESS_TARGET)
-	#undef MOTOR_MIN_ENABLE
+
+#if defined MOTOR_MIN_COMMAND && defined (BRUSHLESS_TARGET)
+	#define IDLE_OFFSET  (MOTOR_MIN_COMMAND*20)  //dshot has 2000 steps
 #endif
+#if defined MOTOR_MIN_COMMAND2 && defined (BRUSHLESS_TARGET)
+	#define IDLE_OFFSET  (MOTOR_MIN_COMMAND2*20)  //dshot has 2000 steps
+#endif
+#if defined MOTOR_MIN_COMMAND3 && defined (BRUSHLESS_TARGET)
+	#define IDLE_OFFSET  (MOTOR_MIN_COMMAND3*20)  //dshot has 2000 steps
+#endif
+
+
