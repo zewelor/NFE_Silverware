@@ -134,7 +134,7 @@ void sbus_init(void)
 
     USART_Init(USART1, &USART_InitStructure);
 // swap rx/tx pins
-#ifndef Alienwhoop_ZERO
+#ifdef SERIAL_RX_SWD
     USART_SWAPPinCmd( USART1, ENABLE);
 #endif
 // invert signal ( default sbus )

@@ -25,6 +25,7 @@
 
 // SPI PINS DEFINITONS & RADIO
 #if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF)
+#define SERIAL_RX_SWD
 #define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_3
 #define SERIAL_RX_PIN GPIO_Pin_14
 #define SERIAL_RX_PORT GPIOA
@@ -98,6 +99,7 @@
 
 // SPI PINS DEFINITONS & RADIO
 #if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF) 
+#define SERIAL_RX_SWD
 #define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_3
 #define SERIAL_RX_PIN GPIO_Pin_14
 #define SERIAL_RX_PORT GPIOA
@@ -169,6 +171,7 @@
 
 // SPI PINS DEFINITONS & RADIO
 #if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024) || defined(RX_CRSF) 
+#define SERIAL_RX_SWD
 #define SERIAL_RX_SPEKBIND_BINDTOOL_PIN GPIO_Pin_3
 #define SERIAL_RX_PIN GPIO_Pin_14
 #define SERIAL_RX_PORT GPIOA
