@@ -14,7 +14,7 @@
 //#define E011
 //#define H8mini_blue_board
 #define Alienwhoop_ZERO  
-
+//#define WolfHoo_Brushless
 
 
 
@@ -364,7 +364,7 @@
 //#define NOMOTORS
 
 // throttle direct to motors for thrust measure
-// #define MOTORS_TO_THROTTLE
+//#define MOTORS_TO_THROTTLE
 
 // throttle direct to motors for thrust measure as a flight mode
 //#define MOTORS_TO_THROTTLE_MODE CHAN_OFF

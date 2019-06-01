@@ -313,7 +313,7 @@
 //#define SOFTI2C_GYRO_ADDRESS 0x69
 #define GYRO_ID_1 0x68
 #define GYRO_ID_2 0x98 // new id
-#define GYRO_ID_3 0x7D
+#define GYRO_ID_3 0x78
 #define GYRO_ID_4 0x72
 #define SENSOR_ROTATE_180
 
@@ -356,8 +356,8 @@
 #endif
 
 // MOTOR PINS
-#define MOTOR0_PIN_PA7
-#define MOTOR1_PIN_PB1
-#define MOTOR2_PIN_PA4
-#define MOTOR3_PIN_PA6
+#define MOTOR0_PIN_PA6
+#define MOTOR1_PIN_PA4
+#define MOTOR2_PIN_PB1
+#define MOTOR3_PIN_PA7
 #endif
