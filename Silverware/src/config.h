@@ -14,7 +14,7 @@
 //#define E011
 //#define H8mini_blue_board
 #define Alienwhoop_ZERO  
-//#define WolfHoo_Brushless
+
 
 
 
