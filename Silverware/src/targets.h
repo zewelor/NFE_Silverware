@@ -357,7 +357,11 @@
 #define GYRO_ID_2 0x98 // common h8 gyro
 #define GYRO_ID_3 0x7D
 #define GYRO_ID_4 0x72
+//#define SENSOR_ROTATE_45_CCW
+//#define SENSOR_ROTATE_45_CW
+//#define SENSOR_ROTATE_90_CCW
 //#define SENSOR_ROTATE_180
+//#define SENSOR_FLIP_180
 
 // SPI PINS DEFINITONS & RADIO
 #if defined(RX_SBUS) || defined(RX_DSMX_2048) || defined(RX_DSM2_1024)
