@@ -13,6 +13,7 @@
 //#define BWHOOP
 //#define E011
 //#define H8mini_blue_board
+//#define Silverlite_Brushless
 #define Alienwhoop_ZERO  
 
 
@@ -135,7 +136,7 @@
 // ************* Set your lipo cell count to override auto cell count detect logic
 //#define LIPO_CELL_COUNT 1
 
-// ************* Raises pids automatically as battery voltage drops in flight.  Ensure voltage is calibrated before use.
+// ************* Raises pids automatically as battery voltage drops in flight.  Ensure voltage is calibrated before use ****CRITICAL****.
 #define PID_VOLTAGE_COMPENSATION
 #define LEVELMODE_PID_ATTENUATION 0.90f  //used to prevent oscillations in angle modes with pid_voltage_compensation enabled due to high pids
 
