@@ -356,6 +356,9 @@
 //will also not activate on the ground untill this threshold is passed during takeoff for safety and better staging behavior.
 #define THROTTLE_SAFETY .10f
 
+//Activating this setting makes the accelerometer less prone to drift or yaw slow down in angle mode but more likely to become confused in crashes or impacts.  Only use if necessary
+//#define ACCELEROMETER_DRIFT_FIX
+
 // level mode "manual" trims ( in degrees)
 // pitch positive forward
 // roll positive right
