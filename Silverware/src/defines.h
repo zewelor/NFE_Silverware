@@ -55,7 +55,7 @@
 #define CH_RLL_TRIM 7
 #define CH_THR_TRIM 8
 #define CH_YAW_TRIM 9
-// next 3 channels only when *not* using USE_STOCK_TX
+// next 3 channels only when *not* using TX_STOCK
 #define CH_INV 6
 #define CH_VID 7
 #define CH_PIC 8
@@ -76,7 +76,7 @@
 #define CH_AUX3 CH_OFF
 #define CH_AUX4 CH_OFF
 
-#ifdef USE_DEVO
+#ifdef TX_DEVO
 // devo tx channel mapping
 // also for nr24multipro
 #define CHAN_5 CH_INV
@@ -93,7 +93,7 @@
 #define CHAN_OFF CH_OFF
 #endif
 
-#ifdef USE_MULTI
+#ifdef TX_MULTI
 // multimodule mapping ( taranis )
 #define CHAN_5 CH_FLIP
 #define CHAN_6 CH_RTH
@@ -109,7 +109,7 @@
 #define CHAN_OFF CH_OFF
 #endif
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 #define CHAN_5 CH_EXPERT
 #define CHAN_6 CH_AUX1
 #define CHAN_7 CH_HEADFREE

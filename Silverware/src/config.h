@@ -84,9 +84,9 @@
 //#define RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND
 
 // *************Transmitter Type Selection
-//#define USE_STOCK_TX
-//#define USE_DEVO
-#define USE_MULTI
+//#define TX_STOCK
+//#define TX_DEVO
+#define TX_MULTI
 
 // *******************************SWITCH SELECTION*****************************
 // *************CHAN_ON - on always ( all protocols)
@@ -280,7 +280,7 @@
 //#define MOTOR_BEEPS
 
 // *************0 - 7 - power for telemetry
-#define TX_POWER 7
+#define TELEMETRY_TX_POWER 7
 
 // *************led brightness in-flight ( solid lights only)
 // *************0- 15 range

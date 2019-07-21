@@ -148,7 +148,7 @@ THE SOFTWARE.
 // was 250 ( uS )
 #define PACKET_OFFSET 250
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 #undef PACKET_OFFSET
 #define PACKET_OFFSET -250
 #endif
@@ -221,8 +221,8 @@ aux[CH_AUX1] = 1;
 	
 #ifdef RADIO_XN297L
 
-#ifndef TX_POWER
-#define TX_POWER 7
+#ifndef TELEMETRY_TX_POWER
+#define TELEMETRY_TX_POWER 7
 #endif
  	
 // Gauss filter amplitude - lowest
@@ -244,7 +244,7 @@ static uint8_t regs_1e[4] = { 0x3e , 0xf6 , 0x37 , 0x5d };
 writeregs( regs_1e , sizeof(regs_1e) );
 
 
-#define XN_POWER B00000001|((TX_POWER&7)<<3)
+#define XN_POWER B00000001|((TELEMETRY_TX_POWER&7)<<3)
 
 #define XN_TO_RX B10001111
 #define XN_TO_TX B10000010
@@ -738,7 +738,7 @@ extern int bound_for_BLE_packet;
 extern int failsafe;
 int onground_and_bind = (failsafe<<2)+(onground<<1)+(bound_for_BLE_packet);
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 	//nothing to do - already prepared (4. bit flag is 0 for stock TX)
 #else
 	onground_and_bind = 8+onground_and_bind;
@@ -1023,7 +1023,7 @@ static int decodepacket( void)
 //                      rx[2] = rx[2] + 0.03225 * 0.5 * (float)(((rxdata[10])>>2) - 31);
 
 			    // Instead they are used as binary aux channels
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 char trims[4];
 			    trims[0] = rxdata[6] >> 2;
 			    trims[1] = rxdata[4] >> 2;

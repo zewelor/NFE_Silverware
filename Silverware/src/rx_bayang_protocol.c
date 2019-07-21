@@ -161,7 +161,7 @@ static int decodepacket( void)
 //			rx[1] = rx[1] + 0.03225 * 0.5 * (float)(((rxdata[6])>>2) - 31);
 //			rx[2] = rx[2] + 0.03225 * 0.5 * (float)(((rxdata[10])>>2) - 31);
 	
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 char trims[2];
 static char lasttrim[2];
 
@@ -291,7 +291,7 @@ int timingfail = 0;
 #define PACKET_OFFSET 500
 
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 #undef PACKET_PERIOD
 #define PACKET_PERIOD 3000
 

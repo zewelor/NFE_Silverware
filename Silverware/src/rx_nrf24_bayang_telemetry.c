@@ -43,7 +43,7 @@ THE SOFTWARE.
 // was 250 ( uS )
 #define PACKET_OFFSET 000
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 #undef PACKET_PERIOD
 #define PACKET_PERIOD 2000
 #undef PACKET_OFFSET
@@ -434,7 +434,7 @@ static int decodepacket(void)
 
 
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
                 char trims[4];
                 trims[0] = rxdata[6] >> 2;
                 trims[1] = rxdata[4] >> 2;

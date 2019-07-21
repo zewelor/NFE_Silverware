@@ -84,8 +84,8 @@ void rx_init()
 
 #ifdef RADIO_XN297L
 
-#ifndef TX_POWER
-#define TX_POWER 7
+#ifndef TELEMETRY_TX_POWER
+#define TELEMETRY_TX_POWER 7
 #endif
  	
 // Gauss filter amplitude - lowest
@@ -108,7 +108,7 @@ writeregs( regs_1e , sizeof(regs_1e) );
 
 //#define XN_TO_RX B10001111
 //#define XN_TO_TX B10000010
-//#define XN_POWER B00000001|((TX_POWER&7)<<3)
+//#define XN_POWER B00000001|((TELEMETRY_TX_POWER&7)<<3)
 
 
 #define XN_TO_RX B10001111
@@ -726,7 +726,7 @@ int timingfail = 0;
 // was 250 ( uS )
 #define PACKET_OFFSET 250
 
-#ifdef USE_STOCK_TX
+#ifdef TX_STOCK
 #undef PACKET_OFFSET
 #define PACKET_OFFSET -250
 #endif

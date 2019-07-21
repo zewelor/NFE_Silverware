@@ -87,8 +87,8 @@ delay(1000);
 // the xn297l works with default register values ok
 
 // tx power 0-7
-#ifndef TX_POWER
-#define TX_POWER 7
+#ifndef TELEMETRY_TX_POWER
+#define TELEMETRY_TX_POWER 7
 #endif
 	
 // Gauss filter amplitude - lowest to fix telemetry issue
@@ -101,7 +101,7 @@ delay(1000);
 	
 #define XN_TO_RX B10001111
 #define XN_TO_TX B10000010
-#define XN_POWER B00000111|((TX_POWER&7)<<3)
+#define XN_POWER B00000111|((TELEMETRY_TX_POWER&7)<<3)
 
 #endif
 
@@ -120,14 +120,14 @@ delay(1000);
     writeregs(demodcal, sizeof(demodcal));
 
 // tx power 0-3
-#ifndef TX_POWER
-#define TX_POWER 3
+#ifndef TELEMETRY_TX_POWER
+#define TELEMETRY_TX_POWER 3
 #endif
 
 
 #define XN_TO_RX B00001111
 #define XN_TO_TX B00000010
-#define XN_POWER (B00000001|((TX_POWER&3)<<1))
+#define XN_POWER (B00000001|((TELEMETRY_TX_POWER&3)<<1))
 #endif
 
 void rx_init()
