@@ -1,7 +1,7 @@
 
 #include "config.h"
 
-#ifdef BWHOOP
+#ifdef BOARD_BWHOOP
 //LEDS
 #define LED_NUMBER 2
 #define LED1PIN GPIO_Pin_2
@@ -70,7 +70,7 @@
 #define MOTOR3_PIN_PA7 // motor 3 front-right
 #endif
 
-#ifdef E011
+#ifdef BOARD_E011
 //LEDS
 #define LED_NUMBER 2
 #define LED1PIN GPIO_Pin_2
@@ -140,7 +140,7 @@
 #define MOTOR3_PIN_PA7 // motor 3 front-right
 #endif
 
-#ifdef H8mini_blue_board
+#ifdef BOARD_H8MINI_BLUE_BOARD
 //LEDS
 #define LED_NUMBER 1
 #define LED1PIN GPIO_Pin_1
@@ -208,7 +208,7 @@
 #define MOTOR3_PIN_PA7 // motor 3 front-right
 #endif
 
-#ifdef Alienwhoop_ZERO
+#ifdef BOARD_ALIENWHOOP_ZERO
 //LEDS
 #define LED_NUMBER 1
 #define LED1PIN GPIO_Pin_0
@@ -342,7 +342,7 @@
 #endif
 
 
-#ifdef Silverlite_Brushless
+#ifdef BOARD_SILVERLITE_BRUSHLESS
 #define BRUSHLESS_TARGET
 //LEDS
 #define LED_NUMBER 1

@@ -9,12 +9,12 @@
 // *************SELECT ONLY ONE 
 // *************uncomment BWHOOP define for bwhoop, bwhoop pro, E011C Santa Edition, and Beta FPV Lite Flight Controllers
 // *************uncomment E011 define for E011 flight Controller
-// *************uncomment H8mini_blue_board for the H8 mini flight controller with blue circuit board
-//#define BWHOOP
-//#define E011
-//#define H8mini_blue_board
-//#define Silverlite_Brushless
-#define Alienwhoop_ZERO  
+// *************uncomment BOARD_H8MINI_BLUE_BOARD for the H8 mini flight controller with blue circuit board
+//#define BOARD_BWHOOP
+//#define BOARD_E011
+//#define BOARD_H8MINI_BLUE_BOARD
+//#define BOARD_SILVERLITE_BRUSHLESS
+#define BOARD_ALIENWHOOP_ZERO  
 
 
 
